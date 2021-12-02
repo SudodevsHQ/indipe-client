@@ -1,27 +1,42 @@
-import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-
 import * as React from "react";
-import { View, Text, Button } from "react-native";
-
-async function signOut() {
-  try {
-    GoogleSignin.signOut();
-    await auth().signOut();
-  } catch (error) {
-    console.error(error);
-  }
-}
+import { View, StyleSheet } from "react-native";
+import ProfileAvatar from "../components/ProfileAvatar";
+import MoneyInfo from "../components/MoneyInfo";
+import UpiInfo from "../components/UpiInfo";
+import GetStartedIllustration from "../components/GetStartedIllustration";
+import FooterButtons from "../components/FooterButton";
 
 function Home() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home</Text>
-      <Button title="LOGOUT" onPress={() => signOut()}>
+    <View style={styles.pageStyles}>
+      <View style={styles.header}>
+        <MoneyInfo />
+        <ProfileAvatar />
+      </View>
+
+      <UpiInfo />
+
+      <GetStartedIllustration />
+
+      <FooterButtons />
+
+      {/* <Button title="LOGOUT" onPress={() => signOut()}>
         LOGIN
-      </Button>
+      </Button> */}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  pageStyles: {
+    backgroundColor: "white",
+    flex: 1,
+    padding: 18,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
 
 export default Home;

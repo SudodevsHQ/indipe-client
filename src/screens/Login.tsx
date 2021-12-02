@@ -8,19 +8,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-import auth from "@react-native-firebase/auth";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { themes } from "../constants/colors";
-
-async function onGoogleButtonPress() {
-  const { idToken } = await GoogleSignin.signIn();
-
-  console.log(idToken);
-
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-  return auth().signInWithCredential(googleCredential);
-}
+import { onGoogleButtonPress } from "../utils/auth";
 
 const image = require("../../assets/splash.png");
 
@@ -59,8 +48,6 @@ const LoginScreen = () => {
     </View>
   );
 };
-
-// const
 
 const styles = StyleSheet.create({
   container: {

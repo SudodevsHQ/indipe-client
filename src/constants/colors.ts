@@ -9,6 +9,8 @@ export const themes = {
     backgroundColor: "#ffffff",
 
     auxiliaryBackgroundColor: "#2E3039",
+    inactiveCardBg: "#D9F0E9",
+
     buttonBackground: ["#1F2028", "#8BD2BD"],
 
     tintColor: "8BD2BD",

@@ -28,13 +28,13 @@ const AuthNavigator = () => {
     return subscriber; // unsubscribe on unmount
   }, [initializing, user]);
 
-  if (initializing) {
-    return null;
-  }
+  // if (initializing) {
+  //   return null;
+  // }
 
-  if (!user) {
-    return <LoginScreen />;
-  }
+  // if (!user) {
+  //   return <LoginScreen />;
+  // }
 
   return <Home />;
 };
