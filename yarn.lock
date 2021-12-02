@@ -1047,6 +1047,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/dm-sans@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/dm-sans/-/dm-sans-0.2.0.tgz#2e095337cd38873e56b104e4c152d61adb33c12c"
+  integrity sha512-PsqVpbas6ySK/ERDRNW0OmiuIf9bJPQWDID1wyNACZuSk91d5OdJkd8BpqvQJirpJKggIGmybJ/ESxZLQCgJ9g==
+
 "@expo/config-plugins@3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-3.1.0.tgz#0752ff33c5eab21cf42034a44e79df97f0f867f8"
@@ -1988,6 +1993,32 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.11.tgz#6ea7342dfb379ea1210835bada87b3c512120234"
   integrity sha512-KB0sixD67CeecHC33MYn+eYARkqTheIRNuu97y2XMjR7Wu3XibO1vaY6VBV6O/a89SPI81cEUIYT87UqUWlZNw==
 
+"@types/prop-types@*":
+  version "15.7.4"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
+  integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+
+"@types/react-native@~0.64.12":
+  version "0.64.19"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.19.tgz#2b888c082ad293fa0fa6ae34c5e9457cfb38e50a"
+  integrity sha512-bT62QhaPvOKFGmlfURIC98ILjUDoIFrc2Bn5EzL3qciZrT91vHwkxFOkuEyQJy+DWaHCa2z3IrtIEJywkGu/Bg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@~17.0.21":
+  version "17.0.37"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.37.tgz#6884d0aa402605935c397ae689deed115caad959"
+  integrity sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/scheduler@*":
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
+  integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
 "@types/yargs-parser@*":
   version "20.2.1"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.1.tgz#3b9ce2489919d9e4fea439b76916abc34b2df129"
@@ -2778,6 +2809,11 @@ css-in-js-utils@^2.0.0:
     hyphenate-style-name "^1.0.2"
     isobject "^3.0.1"
 
+csstype@^3.0.2:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
+  integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
+
 dayjs@^1.8.15:
   version "1.10.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
@@ -2995,6 +3031,13 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+expo-app-loading@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/expo-app-loading/-/expo-app-loading-1.2.1.tgz#d097abcbb3bb7cae0646f29560a431c9bff95169"
+  integrity sha512-ROQoPdwQOU2PjskmUMzJ5rq3gUkEF3V/ACM7Z6X2y7spsj5xqp/YSTLzEOlGL69DNYn5A3znvN5LUZ3e1gsnXg==
+  dependencies:
+    expo-splash-screen "~0.13.3"
+
 expo-application@~4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-4.0.0.tgz#ff629bd441da1b40d299fb84f5740715ece745ba"
@@ -3114,7 +3157,7 @@ expo-modules-core@~0.4.4, expo-modules-core@~0.4.7, expo-modules-core@~0.4.8:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
-expo-splash-screen@~0.13.5:
+expo-splash-screen@~0.13.3, expo-splash-screen@~0.13.5:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.13.5.tgz#ece76c092f2ce88e4660a70e532ed47909a01ddd"
   integrity sha512-L/L0XlmmxSoyuooCVvbPBO4xUF9kAs+F0+fML3pf7miBOnTd/v9j5riKSmaDthNtM4AarXxgi0AXzSHQ1M3rZg==
@@ -6231,6 +6274,11 @@ type-fest@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.7.1.tgz#8dda65feaf03ed78f0a3f9678f1869147f7c5c48"
   integrity sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==
+
+typescript@~4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
 ua-parser-js@^0.7.30:
   version "0.7.31"

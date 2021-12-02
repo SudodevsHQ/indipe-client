@@ -3,9 +3,8 @@ import auth from "@react-native-firebase/auth";
 
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { GOOGLE_SIGN_IN_WEBCLIENTID } from "../constants/firebase";
-// import { useDispatch } from "react-redux";
-// import { setUserData } from "src/state/home/actions";
-import DetailsScreen from "./SomeScreen";
+
+import LoginScreen from "./Login";
 import Home from "./Home";
 
 GoogleSignin.configure({
@@ -34,7 +33,7 @@ const AuthNavigator = () => {
   }
 
   if (!user) {
-    return <DetailsScreen />;
+    return <LoginScreen />;
   }
 
   return <Home />;
