@@ -1,12 +1,12 @@
 import * as React from "react";
 import { View, Text } from "react-native";
 
-function DetailsScreen() {
+function Home() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Details Screen</Text>
+      <Text>Home</Text>
     </View>
   );
 }
 
-export default DetailsScreen;
+export default Home;
