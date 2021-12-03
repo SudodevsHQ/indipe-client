@@ -5,7 +5,7 @@ import { themes } from '../constants/colors';
 import { pageStyles } from './Home';
 import { hugeText } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
-import { GenericButton } from '../components/FooterButton';
+import { GenericButton } from '../components/FooterButtons';
 import CloseX from '../components/CloseX';
 import { useRoute } from '@react-navigation/core';
 
@@ -49,7 +49,6 @@ const SendMoney = () => {
                     </View>
                 )}
             </View>
-            cu
             <GenericButton
                 onPress={() => {
                     //

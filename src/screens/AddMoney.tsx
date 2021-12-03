@@ -2,22 +2,24 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import RazorpayCheckout from 'react-native-razorpay';
+import { useAtom } from 'jotai';
 
 import { themes } from '../constants/colors';
 import { pageStyles } from './Home';
 import { hugeText, mutedTextStyle } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
-import { GenericButton } from '../components/FooterButton';
 import CloseX from '../components/CloseX';
-import CurrencySelect, { TCurrencyProps } from '../components/CurrencySelect';
+import CurrencySelect from '../components/CurrencySelect';
 import { RAZORPAY_API_KEY } from '../../keys';
+import { currencyDataAtom } from '../state/atoms';
+import { GenericButton } from '../components/GenericButton';
 
 const AddMoney = () => {
     const [amount, onChangeAmount] = React.useState('');
-    const [currencyData, setCurrencyData] =
-        React.useState<TCurrencyProps>(null);
 
-    const handleMoneyValueChange = value => {
+    const [currencyData, setCurrencyData] = useAtom(currencyDataAtom);
+
+    const handleMoneyValueChange = (value: string) => {
         // add validation
         if (value.length < 6) {
             onChangeAmount(value);
@@ -47,6 +49,7 @@ const AddMoney = () => {
         RazorpayCheckout.open(options)
             .then(data => {
                 // handle success
+                console.log(data);
                 alert(`Success: ${data.razorpay_payment_id}`);
             })
             .catch(error => {

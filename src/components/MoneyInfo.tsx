@@ -1,12 +1,17 @@
 import React from 'react';
+import { useAtom } from 'jotai';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { themes } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { GenericButton } from './FooterButton';
+
+import { currencyDataAtom } from '../state/atoms';
 
 const MoneyInfo = ({ showTransferButton = false }) => {
     const navigation = useNavigation();
+    const [currencyData] = useAtom(currencyDataAtom);
+
+    console.log(currencyData);
 
     const goToAddMoneyScreen = () => navigation.navigate('Add Money');
 
@@ -19,7 +24,7 @@ const MoneyInfo = ({ showTransferButton = false }) => {
                     ₹ 0.00
                 </Text>
 
-                <Text style={styles.subText}>$ 0.00</Text>
+                <Text style={styles.subText}>{currencyData.symbol} 0.00</Text>
             </View>
 
             <View style={styles.row}>

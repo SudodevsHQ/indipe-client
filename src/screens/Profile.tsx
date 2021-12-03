@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import MoneyInfo, { hugeText } from '../components/MoneyInfo';
+import MoneyInfo from '../components/MoneyInfo';
 import ProfileAvatar from '../components/ProfileAvatar';
+import TransactionsList from '../components/TransactionsList';
 import UpiInfo from '../components/UpiInfo';
+import { userAtom } from '../state/atoms';
 import { semiHugeText } from './AddMoney';
-import { userAtom } from './AuthNavigator';
 import { pageStyles } from './Home';
 
 const Profile = () => {
@@ -23,7 +24,14 @@ const Profile = () => {
             <View style={{ flexDirection: 'row' }}>
                 <MoneyInfo showTransferButton />
             </View>
+
             <UpiInfo />
+
+            <TransactionsList
+                title={'Account History'}
+                showTransactionsOnly
+                isSection
+            />
         </View>
     );
 };

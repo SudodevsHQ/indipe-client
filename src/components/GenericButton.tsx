@@ -1,43 +1,13 @@
-import Ionicons from '@expo/vector-icons/build/Ionicons';
-import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
     StyleProp,
     TextStyle,
+    GestureResponderEvent,
+    TouchableOpacity,
+    StyleSheet,
+    Text,
 } from 'react-native';
-import { GestureResponderEvent } from 'react-native-modal';
 import { themes } from '../constants/colors';
-
-const FooterButtons = () => {
-    const navigation = useNavigation();
-    return (
-        <View style={styles.container}>
-            <GenericButton
-                text="Scan & Pay"
-                type="primary"
-                icon={
-                    <Ionicons
-                        name="scan-circle"
-                        size={25}
-                        color={themes.light.buttonText}
-                        style={{ marginRight: 6 }}
-                    />
-                }
-                onPress={() => navigation.navigate('Scanner')}
-            />
-
-            <GenericButton
-                text="Recieve Money"
-                type="secondary"
-                onPress={() => navigation.navigate('Send Money')}
-            />
-        </View>
-    );
-};
 
 export const GenericButton = ({
     text,
@@ -86,15 +56,6 @@ export const GenericButton = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 18,
-    },
     ctaButton: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -110,5 +71,3 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
-
-export default FooterButtons;

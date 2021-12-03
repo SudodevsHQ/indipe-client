@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
-import { userAtom } from '../screens/AuthNavigator';
 import { useAtom } from 'jotai';
+import { userAtom } from '../state/atoms';
 
 const ProfileAvatar = () => {
     const [user] = useAtom(userAtom);

@@ -4,8 +4,7 @@ import ProfileAvatar from '../components/ProfileAvatar';
 import MoneyInfo from '../components/MoneyInfo';
 import UpiInfo from '../components/UpiInfo';
 import GetStartedIllustration from '../components/GetStartedIllustration';
-import FooterButtons from '../components/FooterButton';
-import InfoModal from '../components/InfoModal';
+import FooterButtons from '../components/FooterButtons';
 import { signOut } from '../utils/auth';
 
 function Home() {
@@ -24,17 +23,9 @@ function Home() {
 
             <FooterButtons />
 
-            <InfoModal
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-                modalText={
-                    'To Send or Recieve money, add money to your account'
-                }
-            />
-
-            <Button title="LOGOUT" onPress={() => signOut()}>
+            {/* <Button title="LOGOUT" onPress={() => signOut()}>
                 LOGIN
-            </Button>
+            </Button> */}
         </View>
     );
 }

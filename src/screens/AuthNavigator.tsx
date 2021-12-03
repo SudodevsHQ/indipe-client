@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
+import { useAtom } from 'jotai';
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { GOOGLE_SIGN_IN_WEBCLIENTID } from '../constants/firebase';
 
 import LoginScreen from './Login';
 import Home from './Home';
-import { atom, useAtom } from 'jotai';
+import { userAtom } from '../state/atoms';
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
 });
 
-export const userAtom = atom<Record<string, string> | null>(null);
-
 const AuthNavigator = () => {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useAtom(userAtom);
+
+    // useEffect(() => {
+    //     auth()
+    //         .currentUser?.getIdToken()
+    //         .then((i) =>
+    //             console.log(
+    //                 '\x1b[44m%s\x1b[0m',
+    //                 'AuthNavigator.tsx line:21 i',
+    //                 i
+    //             )
+    //         );
+    // }, []);
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
