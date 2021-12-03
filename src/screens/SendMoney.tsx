@@ -49,7 +49,7 @@ const SendMoney = () => {
             <Text>Paying {receiverName}</Text>
           </View>
         )}
-      </View>
+      </View>cu
 
       <GenericButton
         onPress={() => {}}

@@ -31,9 +31,11 @@
     "react-native-modal": "^13.0.0",
     "react-native-permissions": "^3.1.0",
     "react-native-qrcode-scanner": "^1.5.4",
+    "react-native-razorpay": "^2.2.8",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
+    "react-native-select-dropdown": "^1.4.0",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
+import auth from "@react-native-firebase/auth";
 
 import { themes } from "../constants/colors";
 import { onGoogleButtonPress } from "../utils/auth";
@@ -21,6 +22,10 @@ const LoginScreen = () => {
 
     onGoogleButtonPress()
       .then(() => {
+        auth()
+          .currentUser.getIdToken()
+          .then((t) => console.log(t));
+
         console.log("Signed in with Google!");
       })
       .catch((e) => console.log(e))

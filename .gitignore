@@ -72,4 +72,6 @@ buck-out/
 web-build/
 dist/
 
+keys.js
+
 # @end expo-cli

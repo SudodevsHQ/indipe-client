@@ -6,6 +6,7 @@ import UpiInfo from "../components/UpiInfo";
 import GetStartedIllustration from "../components/GetStartedIllustration";
 import FooterButtons from "../components/FooterButton";
 import InfoModal from "../components/InfoModal";
+import { signOut } from "../utils/auth";
 
 function Home() {
   const [modalVisible, setModalVisible] = useState(false);
