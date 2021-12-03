@@ -3,13 +3,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
 import { themes } from "../constants/colors";
 import { pageStyles } from "./Home";
-import { hugeText, mutedTextStyle } from "../components/MoneyInfo";
+import { hugeText } from "../components/MoneyInfo";
 import { TextInput } from "react-native-gesture-handler";
 import { GenericButton } from "../components/FooterButton";
 import CloseX from "../components/CloseX";
+import { useRoute } from "@react-navigation/core";
 
-const AddMoney = () => {
+const SendMoney = () => {
   const [number, onChangeNumber] = React.useState("");
+  const { params } = useRoute<any>();
+  const { receiverName, upiAddress } = params ?? {};
+  //   console.log(receiverName);
 
   const handleMoneyValueChange = (value) => {
     // add validation
@@ -21,47 +25,45 @@ const AddMoney = () => {
   return (
     <View style={styles.pageStyles}>
       <View style={styles.header}>
-        <Text style={hugeText}>Add Money</Text>
+        <Text style={hugeText}>Send Money</Text>
 
         <CloseX />
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={hugeText}>$</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={handleMoneyValueChange}
-          value={number}
-          placeholder="0"
-          keyboardType="decimal-pad"
-          autoFocus
-          textAlign="center"
-        />
-      </View>
-      <View style={styles.taxes}>
-        <Text style={mutedTextStyle}>Some charges here</Text>
-      </View>
-      <View style={styles.row}>
-        <View>
-          <Text style={styles.totalPayableText}>
-            $ {number === "" ? 0 : number}
-          </Text>
-          <Text style={mutedTextStyle}>(Total Payable)</Text>
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={styles.inputContainer}>
+          <Text style={hugeText}>₹</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={handleMoneyValueChange}
+            value={number}
+            placeholder="0"
+            keyboardType="decimal-pad"
+            autoFocus
+            textAlign="center"
+          />
         </View>
 
-        <GenericButton
-          text=""
-          type="primary"
-          customStyles={{ width: "15%" }}
-          icon={
-            <Ionicons
-              name="checkmark-sharp"
-              size={20}
-              color={themes.light.buttonText}
-            />
-          }
-        />
+        {receiverName && (
+          <View style={styles.reciever}>
+            <Text>Paying {receiverName}</Text>
+          </View>
+        )}
       </View>
+
+      <GenericButton
+        onPress={() => {}}
+        text=""
+        type="primary"
+        customStyles={{ width: "17%", alignSelf: "flex-end" }}
+        icon={
+          <Ionicons
+            name="checkmark-sharp"
+            size={20}
+            color={themes.light.buttonText}
+          />
+        }
+      />
     </View>
   );
 };
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
   },
   hugeText: hugeText,
   inputContainer: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
@@ -107,6 +108,15 @@ const styles = StyleSheet.create({
   },
 
   totalPayableText: semiHugeText,
+
+  reciever: {
+    alignSelf: "center",
+    textAlign: "center",
+    backgroundColor: themes.light.inactiveCardBg,
+    borderRadius: 10,
+    padding: 8,
+    margin: 10,
+  },
 });
 
-export default AddMoney;
+export default SendMoney;

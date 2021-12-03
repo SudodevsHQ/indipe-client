@@ -11,6 +11,8 @@ import {
 } from "@expo-google-fonts/dm-sans";
 import AddMoney from "./src/screens/AddMoney";
 import Profile from "./src/screens/Profile";
+import Scanner from "./src/screens/Scanner";
+import SendMoney from "./src/screens/SendMoney";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +43,16 @@ function App() {
         <Stack.Screen
           name="Profile"
           component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Scanner"
+          component={Scanner}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Send Money"
+          component={SendMoney}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/build/Ionicons";
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import {
   View,
@@ -12,6 +13,7 @@ import { GestureResponderEvent } from "react-native-modal";
 import { themes } from "../constants/colors";
 
 const FooterButtons = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <GenericButton
@@ -25,10 +27,14 @@ const FooterButtons = () => {
             style={{ marginRight: 6 }}
           />
         }
-        onPress={() => {}}
+        onPress={() => navigation.navigate("Scanner")}
       />
 
-      <GenericButton text="Recieve Money" type="secondary" onPress={() => {}} />
+      <GenericButton
+        text="Recieve Money"
+        type="secondary"
+        onPress={() => navigation.navigate("Send Money")}
+      />
     </View>
   );
 };
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,

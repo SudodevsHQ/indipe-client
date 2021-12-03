@@ -18,7 +18,7 @@ const AuthNavigator = () => {
   useEffect(() => {
     function onAuthStateChanged(newUser) {
       setUser(newUser);
-      console.log(newUser);
+      // console.log(newUser);
       if (initializing) {
         setInitializing(false);
       }
