@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import { createState, useHookstate } from '@hookstate/core';
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { GOOGLE_SIGN_IN_WEBCLIENTID } from '../constants/firebase';
 
 import LoginScreen from './Login';
 import Home from './Home';
+import { atom, useAtom } from 'jotai';
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
 });
 
-const userDetailsState = createState(null);
+export const userAtom = atom<Record<string, string> | null>(null);
 
 const AuthNavigator = () => {
     const [initializing, setInitializing] = useState(true);
-    const user = useHookstate(userDetailsState);
-    // console.log(user.get(), initializing.get());
+    const [user, setUser] = useAtom(userAtom);
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
-            user.set(newUser);
-            // console.log(newUser);
+            setUser(newUser);
+
             if (initializing) {
                 setInitializing(false);
             }
@@ -30,14 +29,13 @@ const AuthNavigator = () => {
 
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, [initializing, user]);
+    }, [initializing, setUser, user]);
 
     if (initializing) {
-        console.log('here');
         return null;
     }
 
-    if (!user.get()) {
+    if (!user) {
         return <LoginScreen />;
     }
 
