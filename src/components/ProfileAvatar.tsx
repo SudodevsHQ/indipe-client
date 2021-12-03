@@ -3,10 +3,15 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import { themes } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/core";
 
 const ProfileAvatar = () => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.circularButton}>
+    <TouchableOpacity
+      style={styles.circularButton}
+      onPress={() => navigation.navigate("Profile")}
+    >
       <Image
         style={styles.avatar}
         source={{

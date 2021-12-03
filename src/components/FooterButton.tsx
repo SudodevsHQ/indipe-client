@@ -1,36 +1,77 @@
 import Ionicons from "@expo/vector-icons/build/Ionicons";
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  StyleProp,
+  TextStyle,
+} from "react-native";
+import { GestureResponderEvent } from "react-native-modal";
 import { themes } from "../constants/colors";
 
 const FooterButtons = () => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[
-          styles.ctaButton,
-          { backgroundColor: themes.light.buttonBackground[0] },
-        ]}
-      >
-        <Ionicons
-          name="scan-circle"
-          size={25}
-          color={themes.light.buttonText}
-          style={{ marginRight: 6 }}
-        />
+      <GenericButton
+        text="Scan & Pay"
+        type="primary"
+        icon={
+          <Ionicons
+            name="scan-circle"
+            size={25}
+            color={themes.light.buttonText}
+            style={{ marginRight: 6 }}
+          />
+        }
+        onPress={() => {}}
+      />
 
-        <Text style={styles.buttonText}>Scan & Pay</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[
-          styles.ctaButton,
-          { backgroundColor: themes.light.buttonBackground[1] },
-        ]}
-      >
-        <Text style={styles.buttonText}>Recieve Money</Text>
-      </TouchableOpacity>
+      <GenericButton text="Recieve Money" type="secondary" onPress={() => {}} />
     </View>
+  );
+};
+
+export const GenericButton = ({
+  text,
+  type,
+  icon,
+  customStyles = {},
+  onPress,
+}: {
+  text: string;
+  type: "primary" | "secondary" | "outlined";
+  icon?: React.ReactNode;
+  customStyles?: StyleProp<TextStyle>;
+  onPress: (event: GestureResponderEvent) => void;
+}) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.ctaButton,
+        {
+          borderWidth: type === "outlined" ? 1 : 0,
+          backgroundColor:
+            type === "outlined"
+              ? "white"
+              : themes.light.buttonBackground[type === "primary" ? 0 : 1],
+        },
+        customStyles,
+      ]}
+      onPress={onPress}
+    >
+      {icon ? icon : null}
+
+      <Text
+        style={[
+          styles.buttonText,
+          type === "outlined" ? { color: themes.light.titleText } : {},
+        ]}
+      >
+        {text}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
@@ -38,6 +79,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 18,
   },
   ctaButton: {
     flexDirection: "row",

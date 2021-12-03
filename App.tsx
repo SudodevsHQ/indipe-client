@@ -9,6 +9,8 @@ import {
   DMSans_500Medium,
   DMSans_700Bold,
 } from "@expo-google-fonts/dm-sans";
+import AddMoney from "./src/screens/AddMoney";
+import Profile from "./src/screens/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,8 +29,18 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
+          name="Auth"
           component={AuthNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Add Money"
+          component={AddMoney}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
