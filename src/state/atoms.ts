@@ -29,6 +29,8 @@ function atomWithAsyncStorage(key, initialValue) {
 
 export const userAtom = atom<Record<string, string> | null>(null);
 
+export const userIDTokenAtom = atom('');
+
 export const currencyDataAtom = atomWithAsyncStorage('currencyData', {
     currencyCode: 'USD',
     symbol: '$',
