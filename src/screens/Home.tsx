@@ -109,15 +109,7 @@ function Home() {
 
             {transactions.length && virtualAccountDetails.balance ? (
                 <View style={styles.staticHeight}>
-                    <TransactionsList
-                        isSection
-                        transactions={[
-                            ...transactions,
-                            ...transactions,
-                            ...transactions,
-                            ...transactions,
-                        ]}
-                    />
+                    <TransactionsList isSection transactions={transactions} />
                 </View>
             ) : (
                 <GetStartedIllustration />

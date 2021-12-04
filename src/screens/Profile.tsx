@@ -17,7 +17,7 @@ const Profile = () => {
     const [transactions] = useAtom(transactionsAtom);
 
     return (
-        <ScrollView style={styles.pageStyles}>
+        <View style={styles.pageStyles}>
             <View style={styles.header}>
                 <Text style={semiHugeText}>Hi, {displayName}</Text>
                 <ProfileAvatar />
@@ -34,7 +34,7 @@ const Profile = () => {
                 showTransactionsOnly
                 transactions={transactions}
             />
-        </ScrollView>
+        </View>
     );
 };
 

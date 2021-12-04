@@ -4,8 +4,12 @@ import CloseX from '../components/CloseX';
 import TransactionsList from '../components/TransactionsList';
 import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
+import { transactionsAtom } from '../state/atoms';
+import { useAtom } from 'jotai';
 
 const Transactions = () => {
+    const [transactions] = useAtom(transactionsAtom);
+
     return (
         <View style={styles.pageStyles}>
             <View style={styles.header}>
@@ -13,7 +17,11 @@ const Transactions = () => {
 
                 <CloseX />
             </View>
-            <TransactionsList showTransactionsOnly={false} isSection={false} />
+            <TransactionsList
+                showTransactionsOnly={false}
+                isSection={false}
+                transactions={transactions}
+            />
         </View>
     );
 };
