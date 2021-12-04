@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import RazorpayCheckout from 'react-native-razorpay';
 import { useAtom } from 'jotai';
@@ -9,15 +9,30 @@ import { pageStyles } from './Home';
 import { hugeText, mutedTextStyle } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
 import CloseX from '../components/CloseX';
-import CurrencySelect from '../components/CurrencySelect';
+import CurrencySelect, { TCurrencyProps } from '../components/CurrencySelect';
 import { RAZORPAY_API_KEY } from '../../keys';
-import { currencyDataAtom } from '../state/atoms';
 import { GenericButton } from '../components/GenericButton';
+import { fetchExchangeAtom } from '../state/atoms';
+import { currencyDataAtom } from '../state/atoms';
 
 const AddMoney = () => {
     const [amount, onChangeAmount] = React.useState('');
 
-    const [currencyData, setCurrencyData] = useAtom(currencyDataAtom);
+    const [currencyData, setCurrencyData] = useAtom<
+        TCurrencyProps,
+        TCurrencyProps,
+        void
+    >(currencyDataAtom);
+
+    const [exchangeRate, fetchExchangeRate] = useAtom(fetchExchangeAtom);
+
+    useEffect(() => {
+        fetchExchangeRate();
+    }, [currencyData]);
+
+    const totalInINR = (
+        parseFloat(exchangeRate.data ?? '0') * parseFloat(amount || '0')
+    ).toFixed(2);
 
     const handleMoneyValueChange = (value: string) => {
         // add validation
@@ -26,15 +41,16 @@ const AddMoney = () => {
         }
     };
 
-    console.log(currencyData);
+    // console.log(currencyData);
 
     const handleDonePress = () => {
+        console.log(totalInINR);
         const options = {
             description: 'Wallet credit',
             image: 'https://i.imgur.com/3g7nmJC.png',
-            currency: currencyData?.currencyCode ?? 'USD',
+            currency: 'INR',
             key: RAZORPAY_API_KEY, // Your api key
-            amount: parseFloat(amount) * 100,
+            amount: parseFloat(totalInINR) * 100,
             name: 'Test',
             prefill: {
                 email: 'void@razorpay.com',
@@ -44,7 +60,7 @@ const AddMoney = () => {
             theme: { color: themes.light.auxiliaryBackgroundColor },
         };
 
-        console.log('----- OPTIONS', options);
+        // console.log('----- OPTIONS', options);
 
         RazorpayCheckout.open(options)
             .then(data => {
@@ -79,13 +95,44 @@ const AddMoney = () => {
                         keyboardType="decimal-pad"
                         autoFocus
                         textAlign="center"
+                        // ref={}
                     />
                 </View>
-                <CurrencySelect onCurrencyChange={c => setCurrencyData(c)} />
+
+                <CurrencySelect
+                    onCurrencyChange={c => setCurrencyData(c)}
+                    currencyData={currencyData}
+                />
+
+                <View style={styles.infoCard}>
+                    <Text
+                        style={{
+                            color: themes.light.auxiliaryBackgroundColor,
+                            fontFamily: 'DMSans_400Regular',
+                            fontSize: 14,
+                        }}
+                    >
+                        Total Payable in INR: ₹{' '}
+                    </Text>
+
+                    <Text
+                        style={{
+                            color: themes.light.auxiliaryBackgroundColor,
+                            fontFamily: 'DMSans_400Regular',
+                            fontSize: 14,
+                        }}
+                    >
+                        {exchangeRate.loading ? (
+                            <ActivityIndicator size="small" color="#3a3a3a" />
+                        ) : (
+                            totalInINR
+                        )}
+                    </Text>
+                </View>
             </View>
 
             <View style={styles.taxes}>
-                <Text style={mutedTextStyle}>Some charges here</Text>
+                <Text style={mutedTextStyle}>Taxes here ig</Text>
             </View>
 
             <View style={styles.row}>
@@ -103,7 +150,7 @@ const AddMoney = () => {
                         onPress={handleDonePress}
                         text=""
                         type="primary"
-                        customStyles={{ width: '15%' }}
+                        customStyles={{ width: '17%' }}
                         icon={
                             <Ionicons
                                 name="checkmark-sharp"
@@ -158,6 +205,17 @@ const styles = StyleSheet.create({
     },
 
     totalPayableText: semiHugeText,
+
+    infoCard: {
+        backgroundColor: themes.light.inactiveCardBg,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginTop: 16,
+        alignSelf: 'center',
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 });
 
 export default AddMoney;

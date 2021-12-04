@@ -24,18 +24,19 @@ export function getCurrencyList() {
 //     "conversionRate": 0.27225701
 //   }
 
-export async function convertINRToNativeCurrency(
-    amountInINR,
-    nativeCurrency: string
-) {
-    const URL = `https://www.headout.com/api/v1/currency/convert?from-currency=INR&to-currency=${nativeCurrency}`;
+// export async function convertCurrency(
+//     amount,
+//     from,
+//     nativeCurrency: string
+// ) {
+//     const URL = `https://www.headout.com/api/v1/currency/convert?from-currency=INR&to-currency=${nativeCurrency}`;
 
-    const response = await fetch(URL);
-    const data = await response.json();
+//     const response = await fetch(URL);
+//     const data = await response.json();
 
-    const convertedAmountInINR = (
-        amountInINR * data.toCurrency.conversionRate
-    ).toPrecision(2);
+//     const convertedAmountInINR = (
+//         amountInINR * data.toCurrency.conversionRate
+//     ).toPrecision(2);
 
-    return convertedAmountInINR;
-}
+//     return convertedAmountInINR;
+// }

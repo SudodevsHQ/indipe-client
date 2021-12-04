@@ -12,13 +12,20 @@ export type TCurrencyProps = {
 };
 
 const CurrencySelect = ({
+    currencyData,
     onCurrencyChange,
 }: {
+    currencyData: TCurrencyProps;
     onCurrencyChange: ({ currencyCode, symbol }: TCurrencyProps) => void;
 }) => {
     return (
         <SelectDropdown
             data={currencies}
+            defaultValue={
+                currencies.filter(
+                    c => c.code === currencyData?.currencyCode
+                )?.[0]
+            }
             buttonStyle={styles.selectStyle}
             buttonTextStyle={styles.buttonTextStyle}
             defaultButtonText="Select Currency"
