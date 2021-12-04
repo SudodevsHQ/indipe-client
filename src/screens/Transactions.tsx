@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CloseX from '../components/CloseX';
 import TransactionsList from '../components/TransactionsList';
+import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
-import { pageStyles } from './Home';
 
 const Transactions = () => {
     return (

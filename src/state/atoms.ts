@@ -6,7 +6,7 @@ import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
  *
  * @see https://jotai.org/docs/guides/persistence#a-helper-function-with-async-storage-and-json-parse
  */
-function atomWithAsyncStorage(key, initialValue) {
+function atomWithAsyncStorage<T, K>(key, initialValue) {
     const baseAtom = atom(initialValue);
     baseAtom.onMount = setValue => {
         (async () => {
@@ -16,7 +16,7 @@ function atomWithAsyncStorage(key, initialValue) {
             }
         })();
     };
-    const derivedAtom = atom(
+    const derivedAtom = atom<T, K>(
         get => get(baseAtom),
         (get, set, update) => {
             const nextValue =
@@ -83,4 +83,14 @@ fetchExchangeAtom.onMount = fetchExchange => {
     fetchExchange();
 };
 
-export const upiIdAtom = atom('');
+export type TVirtualAccountDetails = {
+    user_id: string;
+    account_id: string;
+    balance: number;
+    upi_id: string;
+};
+
+export const virtualAccountDetailsAtom = atomWithAsyncStorage<
+    TVirtualAccountDetails | null,
+    any
+>('virtualAccountDetails', null);

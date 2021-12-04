@@ -6,8 +6,8 @@ import ProfileAvatar from '../components/ProfileAvatar';
 import TransactionsList from '../components/TransactionsList';
 import UpiInfo from '../components/UpiInfo';
 import { userAtom } from '../state/atoms';
+import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
-import { pageStyles } from './Home';
 
 const Profile = () => {
     const [user] = useAtom(userAtom);

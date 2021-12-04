@@ -74,6 +74,12 @@ const AuthNavigator = () => {
                 currency: 'USD',
             };
 
+            console.log(
+                '\x1b[32m%s\x1b[0m',
+                'AuthNavigator.tsx line:77 payload',
+                payload
+            );
+
             postRequest(
                 API_BASE_URL + '/create_user',
                 userTokenId,

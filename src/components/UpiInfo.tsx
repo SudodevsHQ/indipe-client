@@ -6,10 +6,16 @@ import { themes } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { mutedTextStyle } from './MoneyInfo';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useAtom } from 'jotai';
+import { virtualAccountDetailsAtom } from '../state/atoms';
 
 const upiIcon = require('../assets/upi-icon.png');
 
-const UpiInfo = ({ upiId }: { upiId: string }) => {
+const UpiInfo = () => {
+    const [virtualAccountDetails] = useAtom(virtualAccountDetailsAtom);
+
+    const { upi_id: upiId } = virtualAccountDetails || {};
+
     const copyToClipboard = () => {
         Clipboard.setString(upiId);
         ToastAndroid.showWithGravity(

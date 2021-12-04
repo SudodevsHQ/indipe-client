@@ -2,12 +2,12 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet } from 'react-native';
 import { themes } from '../constants/colors';
-import { pageStyles } from './Home';
 import { hugeText } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
 import { GenericButton } from '../components/GenericButton';
 import CloseX from '../components/CloseX';
 import { useRoute } from '@react-navigation/core';
+import { pageStyles } from '../styles/common';
 
 const SendMoney = () => {
     const [number, onChangeNumber] = React.useState('');
@@ -75,7 +75,7 @@ export const semiHugeText = {
 };
 
 const styles = StyleSheet.create({
-    pageStyles: { ...pageStyles },
+    pageStyles: pageStyles,
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
