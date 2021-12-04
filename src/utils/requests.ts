@@ -25,7 +25,7 @@ export async function postRequest(url: string, tokenId: string, payload?: any) {
             'Content-Type': 'application/json',
         };
 
-        console.log('%crequests.ts line:26 here', 'color: #007acc;');
+        // console.log('%crequests.ts line:26 here', 'color: #007acc;');
         const response = await fetch(url, {
             method: 'POST',
             headers: headers,

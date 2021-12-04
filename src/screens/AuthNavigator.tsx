@@ -20,6 +20,7 @@ import {
 } from '../utils/storage';
 import { ToastAndroid } from 'react-native';
 import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
+import useWebhookData from '../hooks/useWebhookData';
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
@@ -35,11 +36,11 @@ const AuthNavigator = () => {
         isUserAccountCreatedAtom
     );
 
-    console.log(
-        '\x1b[42m%s\x1b[0m',
-        'AuthNavigator.tsx line:53 userTokenId',
-        userTokenId
-    );
+    // console.log(
+    //     '\x1b[42m%s\x1b[0m',
+    //     'AuthNavigator.tsx line:53 userTokenId',
+    //     userTokenId
+    // );
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
@@ -62,11 +63,11 @@ const AuthNavigator = () => {
 
     useEffect(() => {
         if (!isUserAccountCreated && userTokenId && user) {
-            console.log(
-                '\x1b[32m%s\x1b[0m',
-                'AuthNavigator.tsx line:53 isUserCreated',
-                isUserAccountCreated
-            );
+            // console.log(
+            //     '\x1b[32m%s\x1b[0m',
+            //     'AuthNavigator.tsx line:53 isUserCreated',
+            //     isUserAccountCreated
+            // );
 
             const payload = {
                 name: user.displayName,
@@ -74,11 +75,11 @@ const AuthNavigator = () => {
                 currency: 'USD',
             };
 
-            console.log(
-                '\x1b[32m%s\x1b[0m',
-                'AuthNavigator.tsx line:77 payload',
-                payload
-            );
+            // console.log(
+            //     '\x1b[32m%s\x1b[0m',
+            //     'AuthNavigator.tsx line:77 payload',
+            //     payload
+            // );
 
             postRequest(
                 API_BASE_URL + '/create_user',

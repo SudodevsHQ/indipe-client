@@ -94,3 +94,12 @@ export const virtualAccountDetailsAtom = atomWithAsyncStorage<
     TVirtualAccountDetails | null,
     any
 >('virtualAccountDetails', null);
+
+export const updateBalanceAtom = atom(null, (get, set, balance: number) => {
+    set(virtualAccountDetailsAtom, {
+        ...get(virtualAccountDetailsAtom),
+        balance: balance,
+    });
+});
+
+export const transctionsAtom = atom([]);

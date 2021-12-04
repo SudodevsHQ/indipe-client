@@ -18,6 +18,7 @@ import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
 import FullScreenLoader from '../components/FullScreenLoader';
 import { pageStyles } from '../styles/common';
+import useWebhookData from '../hooks/useWebhookData';
 
 function Home() {
     // const [modalVisible, setModalVisible] = useState(false);
@@ -34,11 +35,13 @@ function Home() {
 
     const [isUserAccountCreated] = useAtom(isUserAccountCreatedAtom);
 
-    console.log(
-        '\x1b[44m%s\x1b[0m',
-        'Home.tsx line:25 V A D',
-        virtualAccountDetails
-    );
+    // console.log(
+    //     '\x1b[44m%s\x1b[0m',
+    //     'Home.tsx line:25 V A D',
+    //     virtualAccountDetails
+    // );
+
+    useWebhookData();
 
     useEffect(() => {
         if (isUserAccountCreated && userTokenId) {
@@ -55,11 +58,11 @@ function Home() {
                 },
             };
 
-            console.log(
-                '\x1b[44m%s\x1b[0m',
-                'Home.tsx line:39 payload',
-                payload
-            );
+            // console.log(
+            //     '\x1b[44m%s\x1b[0m',
+            //     'Home.tsx line:39 payload',
+            //     payload
+            // );
 
             setIsFetching(true);
             postRequest(
