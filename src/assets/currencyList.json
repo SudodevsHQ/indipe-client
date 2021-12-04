@@ -1,0 +1,147 @@
+[
+    {
+        "code": "EUR",
+        "currencyName": "Euro",
+        "symbol": "EUR",
+        "localSymbol": "€",
+        "precision": 2,
+        "currency": "EUR"
+    },
+    {
+        "code": "GBP",
+        "currencyName": "British Pound",
+        "symbol": "GBP",
+        "localSymbol": "£",
+        "precision": 2,
+        "currency": "GBP"
+    },
+    {
+        "code": "AED",
+        "currencyName": "United Arab Emirates Dirham",
+        "symbol": "AED",
+        "localSymbol": "AED",
+        "precision": 2,
+        "currency": "AED"
+    },
+    {
+        "code": "USD",
+        "currencyName": "United States Dollar",
+        "symbol": "US$",
+        "localSymbol": "$",
+        "precision": 2,
+        "currency": "USD"
+    },
+    {
+        "code": "SGD",
+        "currencyName": "Singapore Dollar",
+        "symbol": "SG$",
+        "localSymbol": "S$",
+        "precision": 2,
+        "currency": "SGD"
+    },
+    {
+        "code": "AUD",
+        "currencyName": "Australian Dollar",
+        "symbol": "AU$",
+        "localSymbol": "AU$",
+        "precision": 2,
+        "currency": "AUD"
+    },
+    {
+        "code": "INR",
+        "currencyName": "Indian Rupee",
+        "symbol": "INR",
+        "localSymbol": "₹",
+        "precision": 0,
+        "currency": "INR"
+    },
+    {
+        "code": "HKD",
+        "currencyName": "Hong Kong Dollar",
+        "symbol": "HK$",
+        "localSymbol": "HK$",
+        "precision": 0,
+        "currency": "HKD"
+    },
+    {
+        "code": "KRW",
+        "currencyName": "South Korean Won",
+        "symbol": "KRW",
+        "localSymbol": "₩",
+        "precision": 0,
+        "currency": "KRW"
+    },
+    {
+        "code": "CAD",
+        "currencyName": "Canadian Dollar",
+        "symbol": "CA$",
+        "localSymbol": "CA$",
+        "precision": 2,
+        "currency": "CAD"
+    },
+    {
+        "code": "JPY",
+        "currencyName": "Japanese Yen",
+        "symbol": "JPY",
+        "localSymbol": "¥",
+        "precision": 0,
+        "currency": "JPY"
+    },
+    {
+        "code": "NZD",
+        "currencyName": "New Zealand Dollar",
+        "symbol": "NZ$",
+        "localSymbol": "NZ$",
+        "precision": 2,
+        "currency": "NZD"
+    },
+    {
+        "code": "CHF",
+        "currencyName": "Swiss Franc",
+        "symbol": "CHF",
+        "localSymbol": "CHF ",
+        "precision": 2,
+        "currency": "CHF"
+    },
+    {
+        "code": "ZAR",
+        "currencyName": "South African Rand",
+        "symbol": "ZAR",
+        "localSymbol": "ZAR",
+        "precision": 0,
+        "currency": "ZAR"
+    },
+    {
+        "code": "MYR",
+        "currencyName": "Malaysian Ringgit",
+        "symbol": "MYR",
+        "localSymbol": "MYR",
+        "precision": 1,
+        "currency": "MYR"
+    },
+    {
+        "code": "IDR",
+        "currencyName": "Indonesia Rupiah",
+        "symbol": "IDR",
+        "localSymbol": "Rp",
+        "precision": 0,
+        "currency": "IDR"
+    },
+
+    {
+        "code": "CNY",
+        "currencyName": "Chinese Yuan Renminbi",
+        "symbol": "CNY",
+        "localSymbol": "¥",
+        "precision": 2,
+        "currency": "CNY"
+    },
+    {
+        "code": "TWD",
+        "currencyName": "Taiwan New Dollar",
+        "symbol": "TWD",
+        "localSymbol": "NT$",
+        "precision": 2,
+        "currency": "TWD"
+    }
+]

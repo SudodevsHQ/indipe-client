@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "535712924105",
+    "project_id": "indipe-d5158",
+    "storage_bucket": "indipe-d5158.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535712924105:android:50e7d9a4ad203a8b752818",
+        "android_client_info": {
+          "package_name": "com.indipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535712924105-e5a89q0asg9n8p45humvapsu7t5rvlra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.indipe",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "535712924105-hbqscqkjpp6ve6st9urjhuqcae0vfvhc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8LxbVC6lgK_kG32stQSyTtRKCPjFE7_0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535712924105-hbqscqkjpp6ve6st9urjhuqcae0vfvhc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
