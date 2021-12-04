@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.2.5",
     "expo": "~43.0.2",
     "expo-app-loading": "~1.2.1",
+    "expo-clipboard": "~2.0.3",
     "expo-dev-client": "^0.6.3",
     "expo-font": "~10.0.3",
     "expo-splash-screen": "~0.13.5",

@@ -74,4 +74,5 @@ dist/
 
 keys.js
 .eslintcache
+.vscode
 # @end expo-cli
