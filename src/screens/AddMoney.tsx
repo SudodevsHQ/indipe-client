@@ -63,7 +63,7 @@ const AddMoney = () => {
             .then(data => {
                 // handle success
                 console.log(data);
-                alert(`Success: ${data.razorpay_payment_id}`);
+                alert(`Money added successfully!`);
             })
             .catch(error => {
                 // handle failure

@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { themes } from '../constants/colors';
 import { hugeText } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
 import { GenericButton } from '../components/GenericButton';
 import CloseX from '../components/CloseX';
-import { useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { pageStyles } from '../styles/common';
+import FullScreenLoader from '../components/FullScreenLoader';
+import { postRequest } from '../utils/requests';
+import { API_BASE_URL } from '../constants/api';
+import { useAtom } from 'jotai';
+import {
+    userAtom,
+    userIDTokenAtom,
+    virtualAccountDetailsAtom,
+} from '../state/atoms';
 
 const SendMoney = () => {
-    const [number, onChangeNumber] = React.useState('');
+    const [amount, onAmountChange] = React.useState('');
+    const [user] = useAtom(userAtom);
+    const [userIDToken] = useAtom(userIDTokenAtom);
+    const [virtualAccountDetails] = useAtom(virtualAccountDetailsAtom);
+
+    const navigation = useNavigation();
+
+    const { upi_id } = virtualAccountDetails || {};
+
     const { params } = useRoute<any>();
-    const { receiverName, upiAddress } = params ?? {};
+    const { receiverName } = params ?? {};
+
+    const [paymentProcessing, setPaymentProcessing] = useState(false);
     //   console.log(receiverName);
 
     const handleMoneyValueChange = value => {
         // add validation
         if (value.length < 6) {
-            onChangeNumber(value);
+            onAmountChange(value);
         }
     };
+
+    if (paymentProcessing) return <FullScreenLoader />;
 
     return (
         <View style={styles.pageStyles}>
@@ -35,7 +56,7 @@ const SendMoney = () => {
                     <TextInput
                         style={styles.input}
                         onChangeText={handleMoneyValueChange}
-                        value={number}
+                        value={amount}
                         placeholder="0"
                         keyboardType="decimal-pad"
                         autoFocus
@@ -49,10 +70,30 @@ const SendMoney = () => {
                     </View>
                 )}
             </View>
-            cu
+
             <GenericButton
                 onPress={() => {
-                    //
+                    const payload = {
+                        user_id: user.uid,
+                        upi: upi_id,
+                        amount: Number(parseFloat(amount).toFixed(2)) * 100,
+                    };
+                    console.log(
+                        '%cSendMoney.tsx line:79 payload',
+                        'color: #007acc;',
+                        payload
+                    );
+                    setPaymentProcessing(true);
+                    postRequest(API_BASE_URL + '/payout', userIDToken, payload)
+                        .then(
+                            () => {
+                                Alert.alert('', 'Payment Success');
+                                // setTimeout(() => {});
+                                // navigation.goBack();
+                            },
+                            () => Alert.alert('', 'Payment Failed')
+                        )
+                        .then(() => setPaymentProcessing(false));
                 }}
                 text=""
                 type="primary"

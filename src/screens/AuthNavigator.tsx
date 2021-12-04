@@ -36,11 +36,11 @@ const AuthNavigator = () => {
         isUserAccountCreatedAtom
     );
 
-    // console.log(
-    //     '\x1b[42m%s\x1b[0m',
-    //     'AuthNavigator.tsx line:53 userTokenId',
-    //     userTokenId
-    // );
+    console.log(
+        '\x1b[42m%s\x1b[0m',
+        'AuthNavigator.tsx line:53 userTokenId',
+        userTokenId
+    );
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
