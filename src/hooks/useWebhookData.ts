@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { API_BASE_URL } from '../constants/api';
-import { transctionsAtom, updateBalanceAtom, userAtom } from '../state/atoms';
+import { transactionsAtom, updateBalanceAtom, userAtom } from '../state/atoms';
 
 export default function useWebhookData() {
     const [connectionActive, setConnectionActive] = React.useState(false);
@@ -11,7 +11,7 @@ export default function useWebhookData() {
 
     const [, updateBalance] = useAtom(updateBalanceAtom);
 
-    const [, setTransactions] = useAtom(transctionsAtom);
+    const [, setTransactions] = useAtom(transactionsAtom);
 
     const ws = React.useRef(null);
 

@@ -102,4 +102,4 @@ export const updateBalanceAtom = atom(null, (get, set, balance: number) => {
     });
 });
 
-export const transctionsAtom = atom([]);
+export const transactionsAtom = atom([]);

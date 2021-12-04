@@ -19,6 +19,8 @@ import { API_BASE_URL } from '../constants/api';
 import FullScreenLoader from '../components/FullScreenLoader';
 import { pageStyles } from '../styles/common';
 import useWebhookData from '../hooks/useWebhookData';
+import { transactionsAtom } from '../state/atoms';
+import TransactionsList from '../components/TransactionsList';
 
 function Home() {
     // const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +36,7 @@ function Home() {
     const [userTokenId] = useAtom(userIDTokenAtom);
 
     const [isUserAccountCreated] = useAtom(isUserAccountCreatedAtom);
-
+    const [transactions] = useAtom(transactionsAtom);
     // console.log(
     //     '\x1b[44m%s\x1b[0m',
     //     'Home.tsx line:25 V A D',
@@ -105,7 +107,21 @@ function Home() {
 
             <UpiInfo />
 
-            <GetStartedIllustration />
+            {transactions.length && virtualAccountDetails.balance ? (
+                <View style={styles.staticHeight}>
+                    <TransactionsList
+                        isSection
+                        transactions={[
+                            ...transactions,
+                            ...transactions,
+                            ...transactions,
+                            ...transactions,
+                        ]}
+                    />
+                </View>
+            ) : (
+                <GetStartedIllustration />
+            )}
 
             <FooterButtons />
 
@@ -126,6 +142,9 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    staticHeight: {
+        maxHeight: '60%',
     },
 });
 

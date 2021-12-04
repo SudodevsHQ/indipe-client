@@ -30,7 +30,7 @@ const MoneyInfo = ({ showTransferButton = false }) => {
 
             <View style={styles.row}>
                 <Text style={[styles.hugeText, { marginRight: 10 }]}>
-                    ₹ {balanceInINR}
+                    ₹ {balanceInINR?.toFixed(2)}
                 </Text>
 
                 <Text style={styles.subText}>
