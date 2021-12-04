@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, ToastAndroid } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import ProfileAvatar from '../components/ProfileAvatar';
 import MoneyInfo from '../components/MoneyInfo';
 import UpiInfo from '../components/UpiInfo';
@@ -120,10 +122,14 @@ function Home() {
             {/* <Button title="LOGOUT" onPress={() => signOut()}>
                 LOGIN
             </Button> */}
-            {/* 
-            <Button
+
+            {/* <Button
                 title="clear async storage"
-                onPress={() => AsyncStorage.clear()}
+                onPress={() =>
+                    AsyncStorage.clear(() =>
+                        console.log('ASYNC STORAGE CLEARED')
+                    )
+                }
             ></Button> */}
         </View>
     );

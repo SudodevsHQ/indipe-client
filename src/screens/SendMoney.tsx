@@ -12,24 +12,17 @@ import FullScreenLoader from '../components/FullScreenLoader';
 import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
 import { useAtom } from 'jotai';
-import {
-    userAtom,
-    userIDTokenAtom,
-    virtualAccountDetailsAtom,
-} from '../state/atoms';
+import { userAtom, userIDTokenAtom } from '../state/atoms';
 
 const SendMoney = () => {
     const [amount, onAmountChange] = React.useState('');
     const [user] = useAtom(userAtom);
     const [userIDToken] = useAtom(userIDTokenAtom);
-    const [virtualAccountDetails] = useAtom(virtualAccountDetailsAtom);
 
     const navigation = useNavigation();
 
-    const { upi_id } = virtualAccountDetails || {};
-
     const { params } = useRoute<any>();
-    const { receiverName } = params ?? {};
+    const { receiverName, upiAddress } = params ?? {};
 
     const [paymentProcessing, setPaymentProcessing] = useState(false);
     //   console.log(receiverName);
@@ -75,7 +68,7 @@ const SendMoney = () => {
                 onPress={() => {
                     const payload = {
                         user_id: user.uid,
-                        upi: upi_id,
+                        upi: upiAddress,
                         amount: Number(parseFloat(amount).toFixed(2)) * 100,
                     };
                     console.log(
@@ -88,8 +81,8 @@ const SendMoney = () => {
                         .then(
                             () => {
                                 Alert.alert('', 'Payment Success');
-                                // setTimeout(() => {});
-                                // navigation.goBack();
+                                setPaymentProcessing(false);
+                                navigation.navigate('Home');
                             },
                             () => Alert.alert('', 'Payment Failed')
                         )

@@ -84,7 +84,9 @@ const TransactionsList = ({
             <FlatList
                 style={{ marginTop: 24 }}
                 data={transactions}
-                renderItem={({ item }) => <Item transaction={item} />}
+                renderItem={({ item, index }) => (
+                    <Item transaction={item} key={index} />
+                )}
                 keyExtractor={item => item.id}
             />
         </View>
