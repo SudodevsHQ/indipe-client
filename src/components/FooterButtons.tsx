@@ -33,6 +33,8 @@ const FooterButtons = () => {
             />
 
             <InfoModal
+                buttonText={'Add Money'}
+                onButtonPress={() => navigation.navigate('Add Money')}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
                 modalText={
@@ -45,6 +47,7 @@ const FooterButtons = () => {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'absolute',

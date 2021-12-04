@@ -1,11 +1,12 @@
 import { atom, useAtom } from 'jotai';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
 
 /**
  *
  * @see https://jotai.org/docs/guides/persistence#a-helper-function-with-async-storage-and-json-parse
  */
-function atomWithAsyncStorage(key, initialValue) {
+function atomWithAsyncStorage<T, K>(key, initialValue) {
     const baseAtom = atom(initialValue);
     baseAtom.onMount = setValue => {
         (async () => {
@@ -15,7 +16,7 @@ function atomWithAsyncStorage(key, initialValue) {
             }
         })();
     };
-    const derivedAtom = atom(
+    const derivedAtom = atom<T, K>(
         get => get(baseAtom),
         (get, set, update) => {
             const nextValue =
@@ -31,10 +32,18 @@ export const userAtom = atom<Record<string, string> | null>(null);
 
 export const userIDTokenAtom = atom('');
 
-export const currencyDataAtom = atomWithAsyncStorage('currencyData', {
-    currencyCode: 'USD',
-    symbol: '$',
-});
+export const isUserAccountCreatedAtom = atomWithAsyncStorage(
+    ASYNC_STORAGE_KEYS.USER_CREATED_IN_BE,
+    false
+);
+
+export const currencyDataAtom = atomWithAsyncStorage(
+    ASYNC_STORAGE_KEYS.CURRENCY_DATA,
+    {
+        currencyCode: 'USD',
+        symbol: '$',
+    }
+);
 
 const exchangeRateAtom = atom<{
     loading: boolean;
@@ -73,3 +82,24 @@ export const fetchExchangeAtom = atom(
 fetchExchangeAtom.onMount = fetchExchange => {
     fetchExchange();
 };
+
+export type TVirtualAccountDetails = {
+    user_id: string;
+    account_id: string;
+    balance: number;
+    upi_id: string;
+};
+
+export const virtualAccountDetailsAtom = atomWithAsyncStorage<
+    TVirtualAccountDetails | null,
+    any
+>('virtualAccountDetails', null);
+
+export const updateBalanceAtom = atom(null, (get, set, balance: number) => {
+    set(virtualAccountDetailsAtom, {
+        ...get(virtualAccountDetailsAtom),
+        balance: balance,
+    });
+});
+
+export const transactionsAtom = atom([]);

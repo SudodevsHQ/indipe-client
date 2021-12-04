@@ -8,19 +8,19 @@ import { GOOGLE_SIGN_IN_WEBCLIENTID } from '../constants/firebase';
 import LoginScreen from './Login';
 import Home from './Home';
 import {
-    userAccountCreatedInBEAtom,
+    isUserAccountCreatedAtom,
     userAtom,
     userIDTokenAtom,
 } from '../state/atoms';
-import { fetchRequest } from '../utils/requests';
+import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
 import {
-    getData,
     getDataFromAsyncStorage,
-    storeData,
-    storeDataInAsyncAtom,
     storeDataInAsyncStorage,
 } from '../utils/storage';
+import { ToastAndroid } from 'react-native';
+import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
+import useWebhookData from '../hooks/useWebhookData';
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
@@ -32,11 +32,15 @@ const AuthNavigator = () => {
 
     const [userTokenId, setUserIdToken] = useAtom(userIDTokenAtom);
 
-    useEffect(() => {
-        auth()
-            .currentUser?.getIdToken()
-            .then(t => setUserIdToken(t));
-    }, [setUserIdToken]);
+    const [isUserAccountCreated, setIsUserAccountCreated] = useAtom(
+        isUserAccountCreatedAtom
+    );
+
+    console.log(
+        '\x1b[42m%s\x1b[0m',
+        'AuthNavigator.tsx line:53 userTokenId',
+        userTokenId
+    );
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
@@ -52,18 +56,59 @@ const AuthNavigator = () => {
     }, [initializing, setUser, user]);
 
     useEffect(() => {
-        const isUserCreated = getDataFromAsyncStorage('userCreatedInBE');
+        auth()
+            .currentUser?.getIdToken()
+            .then(t => setUserIdToken(t));
+    }, [setUserIdToken]);
 
-        if (isUserCreated) return;
+    useEffect(() => {
+        if (!isUserAccountCreated && userTokenId && user) {
+            // console.log(
+            //     '\x1b[32m%s\x1b[0m',
+            //     'AuthNavigator.tsx line:53 isUserCreated',
+            //     isUserAccountCreated
+            // );
 
-        fetchRequest(API_BASE_URL + '/create_user', userTokenId).then(() => {
-            console.log(
-                '%cAuthNavigator.tsx line:44 [INFO]:CREATE USER SUCCESS',
-                'color: white; background-color: #26bfa5;'
+            const payload = {
+                name: user.displayName,
+                id: user.uid,
+                currency: 'USD',
+            };
+
+            // console.log(
+            //     '\x1b[32m%s\x1b[0m',
+            //     'AuthNavigator.tsx line:77 payload',
+            //     payload
+            // );
+
+            postRequest(
+                API_BASE_URL + '/create_user',
+                userTokenId,
+                payload
+            ).then(
+                () => {
+                    console.log(
+                        '%cAuthNavigator.tsx line:44 [INFO]:CREATE USER SUCCESS',
+                        'color: white; background-color: #26bfa5;'
+                    );
+
+                    ToastAndroid.showWithGravity(
+                        'Created User account',
+                        ToastAndroid.SHORT,
+                        ToastAndroid.CENTER
+                    );
+
+                    setIsUserAccountCreated(true);
+                },
+                error =>
+                    console.log(
+                        '\x1b[41m%s\x1b[0m',
+                        'AuthNavigator.ts line:64 Error Creating User',
+                        error
+                    )
             );
-            storeDataInAsyncStorage('userCreatedInBE', true);
-        });
-    }, [userTokenId]);
+        }
+    }, [userTokenId, user, isUserAccountCreated, setIsUserAccountCreated]);
 
     if (initializing) {
         return null;

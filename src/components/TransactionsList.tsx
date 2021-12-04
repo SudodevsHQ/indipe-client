@@ -20,7 +20,7 @@ const DATA = [
     },
 ];
 
-const Item = ({ title }) => (
+const Item = ({ transaction }) => (
     <View style={styles.item}>
         <View style={styles.transferIcon}>
             <Ionicons
@@ -30,11 +30,20 @@ const Item = ({ title }) => (
             />
         </View>
         <View style={{ flex: 1 }}>
-            <Text style={styles.transactionType}>{title}</Text>
-
-            <Text style={styles.dateTime}>{title}</Text>
+            {transaction.type === 'receive' ? (
+                <Text style={styles.transactionType}>Received On</Text>
+            ) : (
+                <Text style={styles.transactionType}>Sent To</Text>
+            )}
+            {transaction.type === 'receive' ? (
+                <Text style={styles.dateTime}>
+                    {Date(transaction.created_at)}
+                </Text>
+            ) : (
+                <Text style={styles.dateTime}>{transaction.upi}</Text>
+            )}
         </View>
-        <Text style={styles.title}> 30 USD</Text>
+        <Text style={styles.title}> {transaction.amount} INR</Text>
     </View>
 );
 
@@ -42,12 +51,14 @@ type TTransactionListProps = {
     title?: string;
     showTransactionsOnly: boolean;
     isSection: boolean;
+    transactions: any[];
 };
 
 const TransactionsList = ({
     title,
     showTransactionsOnly,
     isSection,
+    transactions,
 }: TTransactionListProps) => {
     const navigation = useNavigation();
 
@@ -59,7 +70,7 @@ const TransactionsList = ({
         <View>
             {isSection ? (
                 <View style={styles.row}>
-                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.title}>Transaction History</Text>
                     <TouchableOpacity onPress={goFullScreen}>
                         <Ionicons
                             name="open-outline"
@@ -72,8 +83,10 @@ const TransactionsList = ({
 
             <FlatList
                 style={{ marginTop: 24 }}
-                data={DATA}
-                renderItem={({ item }) => <Item title={item.title} />}
+                data={transactions}
+                renderItem={({ item, index }) => (
+                    <Item transaction={item} key={index} />
+                )}
                 keyExtractor={item => item.id}
             />
         </View>

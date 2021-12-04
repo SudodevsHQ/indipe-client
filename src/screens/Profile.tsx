@@ -1,18 +1,20 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import MoneyInfo from '../components/MoneyInfo';
 import ProfileAvatar from '../components/ProfileAvatar';
 import TransactionsList from '../components/TransactionsList';
 import UpiInfo from '../components/UpiInfo';
 import { userAtom } from '../state/atoms';
+import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
-import { pageStyles } from './Home';
+import { transactionsAtom } from '../state/atoms';
 
 const Profile = () => {
     const [user] = useAtom(userAtom);
 
     const { displayName } = (user as any) || {};
+    const [transactions] = useAtom(transactionsAtom);
 
     return (
         <View style={styles.pageStyles}>
@@ -30,7 +32,7 @@ const Profile = () => {
             <TransactionsList
                 title={'Account History'}
                 showTransactionsOnly
-                isSection
+                transactions={transactions}
             />
         </View>
     );

@@ -5,30 +5,24 @@ import RazorpayCheckout from 'react-native-razorpay';
 import { useAtom } from 'jotai';
 
 import { themes } from '../constants/colors';
-import { pageStyles } from './Home';
 import { hugeText, mutedTextStyle } from '../components/MoneyInfo';
 import { TextInput } from 'react-native-gesture-handler';
 import CloseX from '../components/CloseX';
-import CurrencySelect, { TCurrencyProps } from '../components/CurrencySelect';
+import CurrencySelect from '../components/CurrencySelect';
 import { RAZORPAY_API_KEY } from '../../keys';
 import { GenericButton } from '../components/GenericButton';
-import { fetchExchangeAtom } from '../state/atoms';
-import { currencyDataAtom } from '../state/atoms';
+
+import useCurrencyAndExchangeData from '../hooks/useCurrencyAndExchangeData';
+import { virtualAccountDetailsAtom } from '../state/atoms';
+import { pageStyles } from '../styles/common';
 
 const AddMoney = () => {
     const [amount, onChangeAmount] = React.useState('');
 
-    const [currencyData, setCurrencyData] = useAtom<
-        TCurrencyProps,
-        TCurrencyProps,
-        void
-    >(currencyDataAtom);
+    const [virtualAccountDetails] = useAtom(virtualAccountDetailsAtom);
 
-    const [exchangeRate, fetchExchangeRate] = useAtom(fetchExchangeAtom);
-
-    useEffect(() => {
-        fetchExchangeRate();
-    }, [currencyData]);
+    const [currencyData, setCurrencyData, exchangeRate] =
+        useCurrencyAndExchangeData();
 
     const totalInINR = (
         parseFloat(exchangeRate.data ?? '0') * parseFloat(amount || '0')
@@ -44,7 +38,6 @@ const AddMoney = () => {
     // console.log(currencyData);
 
     const handleDonePress = () => {
-        console.log(totalInINR);
         const options = {
             description: 'Wallet credit',
             image: 'https://i.imgur.com/3g7nmJC.png',
@@ -52,6 +45,10 @@ const AddMoney = () => {
             key: RAZORPAY_API_KEY, // Your api key
             amount: parseFloat(totalInINR) * 100,
             name: 'Test',
+            notes: {
+                user_id: virtualAccountDetails.user_id,
+                upi_id: virtualAccountDetails.upi_id,
+            },
             prefill: {
                 email: 'void@razorpay.com',
                 contact: '9191919191',
@@ -60,13 +57,13 @@ const AddMoney = () => {
             theme: { color: themes.light.auxiliaryBackgroundColor },
         };
 
-        // console.log('----- OPTIONS', options);
+        console.log('----- OPTIONS', options);
 
         RazorpayCheckout.open(options)
             .then(data => {
                 // handle success
                 console.log(data);
-                alert(`Success: ${data.razorpay_payment_id}`);
+                alert(`Money added successfully!`);
             })
             .catch(error => {
                 // handle failure
@@ -171,7 +168,7 @@ export const semiHugeText = {
 };
 
 const styles = StyleSheet.create({
-    pageStyles: { ...pageStyles },
+    pageStyles: pageStyles,
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',

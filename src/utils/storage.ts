@@ -25,5 +25,6 @@ export const getDataFromAsyncStorage = async (key: string) => {
             '[ERROR]:Failed to read key in AsyncStorage',
             key
         );
+        return null;
     }
 };

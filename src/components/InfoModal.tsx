@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core';
 import React, { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Modal from 'react-native-modal';
@@ -6,16 +5,21 @@ import { GenericButton } from './GenericButton';
 
 type TModalProps = {
     modalText: string;
+    buttonText: string;
+    onModalClose?: () => void;
+    onButtonPress?: () => void;
     modalVisible: boolean;
     setModalVisible: Dispatch<SetStateAction<boolean>>;
 };
 
 const InfoModal = ({
     modalText,
+    buttonText,
+    onButtonPress,
+    onModalClose,
     modalVisible,
     setModalVisible,
 }: TModalProps) => {
-    const navigation = useNavigation();
     const closeModal = () => setModalVisible(false);
 
     return (
@@ -25,17 +29,18 @@ const InfoModal = ({
                     isVisible={modalVisible}
                     onBackButtonPress={closeModal}
                     onBackdropPress={closeModal}
+                    onModalHide={onModalClose}
                 >
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>{modalText}</Text>
 
                         <GenericButton
-                            text="Add Money"
+                            text={buttonText}
                             type="primary"
                             customStyles={{ width: 'auto' }}
                             onPress={() => {
                                 closeModal();
-                                navigation.navigate('Add Money');
+                                onButtonPress();
                             }}
                         />
                     </View>

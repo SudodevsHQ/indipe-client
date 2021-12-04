@@ -1,17 +1,26 @@
 import React from 'react';
-import { useAtom } from 'jotai';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { themes } from '../constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-import { currencyDataAtom } from '../state/atoms';
+import useCurrencyAndExchangeData from '../hooks/useCurrencyAndExchangeData';
+import { virtualAccountDetailsAtom } from '../state/atoms';
+import { useAtom } from 'jotai';
 
 const MoneyInfo = ({ showTransferButton = false }) => {
     const navigation = useNavigation();
-    const [currencyData] = useAtom(currencyDataAtom);
 
-    console.log(currencyData);
+    const [virtualAccountDetails] = useAtom(virtualAccountDetailsAtom);
+
+    const { balance: balanceInINR = 0.0 } = virtualAccountDetails || {};
+
+    const [currencyData, , exchangeRate] = useCurrencyAndExchangeData();
+
+    const balanceInSelectedCurrency = (
+        balanceInINR *
+        (1 / parseFloat(exchangeRate.data))
+    ).toFixed(2);
 
     const goToAddMoneyScreen = () => navigation.navigate('Add Money');
 
@@ -21,10 +30,12 @@ const MoneyInfo = ({ showTransferButton = false }) => {
 
             <View style={styles.row}>
                 <Text style={[styles.hugeText, { marginRight: 10 }]}>
-                    ₹ 0.00
+                    ₹ {balanceInINR?.toFixed(2)}
                 </Text>
 
-                <Text style={styles.subText}>{currencyData.symbol} 0.00</Text>
+                <Text style={styles.subText}>
+                    {currencyData.symbol} {balanceInSelectedCurrency}
+                </Text>
             </View>
 
             <View style={styles.row}>

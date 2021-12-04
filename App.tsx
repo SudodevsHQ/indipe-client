@@ -14,6 +14,7 @@ import Profile from './src/screens/Profile';
 import Scanner from './src/screens/Scanner';
 import SendMoney from './src/screens/SendMoney';
 import Transactions from './src/screens/Transactions';
+import Home from './src/screens/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ function App() {
                 <Stack.Screen
                     name="Auth"
                     component={AuthNavigator}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
