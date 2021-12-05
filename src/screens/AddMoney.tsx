@@ -43,7 +43,7 @@ const AddMoney = () => {
             image: 'https://i.imgur.com/3g7nmJC.png',
             currency: 'INR',
             key: RAZORPAY_API_KEY, // Your api key
-            amount: parseFloat(totalInINR) * 100,
+            amount: (parseFloat(totalInINR) * 100).toFixed(0),
             name: 'Test',
             notes: {
                 user_id: virtualAccountDetails.user_id,

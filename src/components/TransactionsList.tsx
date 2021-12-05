@@ -6,13 +6,33 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 import dayjs from 'dayjs';
 
+const getIcon = transaction => {
+    if (transaction.type === 'send') {
+        if (transaction.status === 'processed') {
+            return 'checkmark-circle-sharp';
+        }
+        return 'timer';
+    } else {
+        return 'arrow-down';
+    }
+};
+const getColor = transaction => {
+    if (transaction.type === 'send') {
+        if (transaction.status === 'processed') {
+            return themes.light.buttonBackground[1];
+        }
+        return themes.light.subText;
+    } else {
+        return themes.light.buttonBackground[1];
+    }
+};
 const Item = ({ transaction }) => (
     <View style={styles.item}>
         <View style={styles.transferIcon}>
             <Ionicons
-                name="swap-horizontal"
+                name={getIcon(transaction)}
                 size={20}
-                color={themes.light.subText}
+                color={getColor(transaction)}
             />
         </View>
         <View style={{ flex: 1 }}>
