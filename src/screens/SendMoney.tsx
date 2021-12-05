@@ -79,8 +79,13 @@ const SendMoney = () => {
                     setPaymentProcessing(true);
                     postRequest(API_BASE_URL + '/payout', userIDToken, payload)
                         .then(
-                            () => {
+                            data => {
                                 Alert.alert('', 'Payment Success');
+                                console.log(
+                                    '%cSendMoney.tsx line:86 data',
+                                    'color: #007acc;',
+                                    data
+                                );
                                 setPaymentProcessing(false);
                                 navigation.navigate('Home');
                             },
