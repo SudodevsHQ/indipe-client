@@ -23,6 +23,7 @@ import Scanner from './Scanner';
 import SendMoney from './SendMoney';
 import Transactions from './Transactions';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FullScreenLoader from '../components/FullScreenLoader';
 
 const Stack = createNativeStackNavigator();
 
@@ -89,7 +90,7 @@ const AuthNavigator = () => {
         //     '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
         //     isUserAccountCreated
         // );
-        if (userTokenId && user) {
+        if (!isUserAccountCreated && userTokenId && user) {
             const payload = {
                 name: user.displayName,
                 id: user.uid,
@@ -116,11 +117,11 @@ const AuthNavigator = () => {
                         'color: white; background-color: #26bfa5;'
                     );
 
-                    ToastAndroid.showWithGravity(
-                        'Created User account',
-                        ToastAndroid.SHORT,
-                        ToastAndroid.CENTER
-                    );
+                    // ToastAndroid.showWithGravity(
+                    //     'Created User account',
+                    //     ToastAndroid.SHORT,
+                    //     ToastAndroid.CENTER
+                    // );
 
                     setIsUserAccountCreated(true);
                 },

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import RazorpayCheckout from 'react-native-razorpay';
 import { useAtom } from 'jotai';
@@ -15,6 +15,8 @@ import { GenericButton } from '../components/GenericButton';
 import useCurrencyAndExchangeData from '../hooks/useCurrencyAndExchangeData';
 import { virtualAccountDetailsAtom } from '../state/atoms';
 import { pageStyles } from '../styles/common';
+import { useNavigation } from '@react-navigation/core';
+import AmountInput from '../components/AmountInput';
 
 const AddMoney = () => {
     const [amount, onChangeAmount] = React.useState('');
@@ -24,15 +26,18 @@ const AddMoney = () => {
     const [currencyData, setCurrencyData, exchangeRate] =
         useCurrencyAndExchangeData();
 
+    const navigation = useNavigation();
+
     const totalInINR = (
         parseFloat(exchangeRate.data ?? '0') * parseFloat(amount || '0')
     ).toFixed(2);
 
     const handleMoneyValueChange = (value: string) => {
-        // add validation
-        if (value.length < 6) {
-            onChangeAmount(value);
+        if (!/^\d{0,5}(\.\d{0,2})?$/g.test(value)) {
+            return;
         }
+
+        onChangeAmount(value);
     };
 
     // console.log(currencyData);
@@ -61,14 +66,26 @@ const AddMoney = () => {
 
         RazorpayCheckout.open(options)
             .then(data => {
-                // handle success
-                console.log(data);
-                alert(`Money added successfully!`);
+                // console.log(data);
+                Alert.alert('', 'Money added successfully', [
+                    {
+                        text: 'Okay',
+                        onPress: () => navigation.navigate('Home'),
+                        style: 'cancel',
+                    },
+                ]);
             })
             .catch(error => {
-                // handle failure
-                console.log(error);
-                alert(`Error: ${error.code} | ${error.description}`);
+                console.log(
+                    '\x1b[31m%s\x1b[0m',
+                    'AddMoney.tsx line:78 [ERROR] :PAYMENT(TOPUP) FAIL: ',
+                    error
+                );
+                alert(
+                    `${
+                        error.code == 0 ? 'Payment Cancelled' : 'Payment Failed'
+                    }`
+                );
             });
     };
 
@@ -81,20 +98,11 @@ const AddMoney = () => {
             </View>
 
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                <View style={styles.inputContainer}>
-                    <Text style={hugeText}>{currencyData?.symbol ?? '$'}</Text>
-
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={handleMoneyValueChange}
-                        value={amount}
-                        placeholder="0"
-                        keyboardType="decimal-pad"
-                        autoFocus
-                        textAlign="center"
-                        // ref={}
-                    />
-                </View>
+                <AmountInput
+                    amount={amount}
+                    handleAmountChange={handleMoneyValueChange}
+                    currencySymbol={currencyData?.symbol}
+                />
 
                 <CurrencySelect
                     onCurrencyChange={c => setCurrencyData(c)}
@@ -129,7 +137,7 @@ const AddMoney = () => {
             </View>
 
             <View style={styles.taxes}>
-                <Text style={mutedTextStyle}>Taxes here ig</Text>
+                <Text style={mutedTextStyle}>*Exclusive of Conversion Fee</Text>
             </View>
 
             <View style={styles.row}>
@@ -179,24 +187,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     hugeText: hugeText,
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
 
-    input: {
-        backgroundColor: '#F8F8F8',
-        minWidth: '25%',
-
-        margin: 6,
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        includeFontPadding: false,
-        borderRadius: 10,
-
-        ...hugeText,
-    },
     taxes: {
         marginBottom: 12,
     },

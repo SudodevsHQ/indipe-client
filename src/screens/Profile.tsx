@@ -21,7 +21,7 @@ const Profile = () => {
     const [transactions] = useAtom(transactionsAtom);
 
     return (
-        <View style={styles.pageStyles}>
+        <ScrollView style={styles.pageStyles}>
             <View style={styles.header}>
                 <Text style={semiHugeText}>Hi, {displayName}</Text>
                 <ProfileAvatar />
@@ -43,6 +43,7 @@ const Profile = () => {
                 style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    marginBottom: 40,
                 }}
             >
                 <GenericButton
@@ -60,12 +61,13 @@ const Profile = () => {
                     }
                 />
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     pageStyles: pageStyles,
+
     header: {
         flexDirection: 'row',
         alignItems: 'center',

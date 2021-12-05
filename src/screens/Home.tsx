@@ -31,7 +31,7 @@ function Home() {
         virtualAccountDetailsAtom
     );
 
-    const [isFetching, setIsFetching] = useState(false);
+    // const [isFetching, setIsFetching] = useState(false);
 
     const [userTokenId] = useAtom(userIDTokenAtom);
 
@@ -43,7 +43,14 @@ function Home() {
         virtualAccountDetails
     );
 
-    // useWebhookData();
+    /**
+     * prevent jank from loading -> screen -> loading
+     */
+    // useEffect(() => {
+    //     if (isUserAccountCreated && !virtualAccountDetails) {
+    //         setIsFetching(true);
+    //     }
+    // }, [isUserAccountCreated, virtualAccountDetails]);
 
     useEffect(() => {
         if (
@@ -70,33 +77,32 @@ function Home() {
             //     payload
             // );
 
-            setIsFetching(true);
+            // setIsFetching(true);
             postRequest(
                 API_BASE_URL + '/create_virtual_account',
                 userTokenId,
                 payload
-            )
-                .then(
-                    data => {
-                        setVirtualAccountDetails(data);
+            ).then(
+                data => {
+                    setVirtualAccountDetails(data);
 
-                        if (!virtualAccountDetails) {
-                            ToastAndroid.showWithGravity(
-                                'Created Virtual account',
-                                ToastAndroid.SHORT,
-                                ToastAndroid.CENTER
-                            );
-                        }
-                    },
+                    if (!virtualAccountDetails) {
+                        ToastAndroid.showWithGravity(
+                            'Created Virtual account',
+                            ToastAndroid.SHORT,
+                            ToastAndroid.CENTER
+                        );
+                    }
+                },
 
-                    error =>
-                        console.log(
-                            '\x1b[41m%s\x1b[0m',
-                            'Home.tsx line:40 [ERROR]: Failed to /create_virtual_account; error',
-                            error
-                        )
-                )
-                .then(() => setIsFetching(false));
+                error =>
+                    console.log(
+                        '\x1b[41m%s\x1b[0m',
+                        'Home.tsx line:40 [ERROR]: Failed to /create_virtual_account; error',
+                        error
+                    )
+            );
+            // .then(() => setIsFetching(false));
         }
         // 🚧
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,7 +115,7 @@ function Home() {
 
     useWebSocketData();
 
-    if (isFetching) return <FullScreenLoader />;
+    // if (isFetching) return <FullScreenLoader />;
 
     return (
         <View style={styles.pageStyles}>
