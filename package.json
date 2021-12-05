@@ -42,7 +42,8 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
     "react-native-select-dropdown": "^1.4.0",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "react-use-websocket": "^2.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

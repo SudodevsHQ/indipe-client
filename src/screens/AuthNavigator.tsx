@@ -40,11 +40,11 @@ const AuthNavigator = () => {
         isUserAccountCreatedAtom
     );
 
-    console.log(
-        '\x1b[42m%s\x1b[0m',
-        'AuthNavigator.tsx line:53 userTokenId',
-        userTokenId
-    );
+    // console.log(
+    //     '\x1b[42m%s\x1b[0m',
+    //     'AuthNavigator.tsx line:53 userTokenId',
+    //     userTokenId
+    // );
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
@@ -66,10 +66,10 @@ const AuthNavigator = () => {
     }, [setUserIdToken]);
 
     useEffect(() => {
-        console.log(
-            '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
-            isUserAccountCreated
-        );
+        // console.log(
+        //     '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
+        //     isUserAccountCreated
+        // );
         if (!isUserAccountCreated && userTokenId && user) {
             // console.log(
             //     '\x1b[32m%s\x1b[0m',

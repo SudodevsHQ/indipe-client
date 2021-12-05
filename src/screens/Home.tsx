@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, ToastAndroid } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, StyleSheet, ToastAndroid } from 'react-native';
 
 import ProfileAvatar from '../components/ProfileAvatar';
 import MoneyInfo from '../components/MoneyInfo';
@@ -19,7 +18,7 @@ import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
 import FullScreenLoader from '../components/FullScreenLoader';
 import { pageStyles } from '../styles/common';
-import useWebhookData from '../hooks/useWebhookData';
+import useWebSocketData from '../hooks/useWebSocketData';
 import { transactionsAtom } from '../state/atoms';
 import TransactionsList from '../components/TransactionsList';
 
@@ -44,7 +43,7 @@ function Home() {
         virtualAccountDetails
     );
 
-    useWebhookData();
+    // useWebhookData();
 
     useEffect(() => {
         if (isUserAccountCreated && userTokenId && !virtualAccountDetails) {
@@ -95,12 +94,16 @@ function Home() {
                 )
                 .then(() => setIsFetching(false));
         }
+        // 🚧
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         userTokenId,
         virtualAccountDetails,
         setVirtualAccountDetails,
         isUserAccountCreated,
     ]);
+
+    useWebSocketData();
 
     if (isFetching) return <FullScreenLoader />;
 
