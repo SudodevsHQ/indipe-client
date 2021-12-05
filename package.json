@@ -27,7 +27,7 @@
     "expo-keep-awake": "~10.0.0",
     "expo-splash-screen": "~0.13.5",
     "expo-status-bar": "~1.1.0",
-    "expo-updates": "~0.10.15",
+    "expo-updates": "~0.10.13",
     "firebase": "^9.5.0",
     "jotai": "^1.4.6",
     "react": "17.0.1",

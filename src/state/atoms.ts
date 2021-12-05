@@ -90,10 +90,10 @@ export type TVirtualAccountDetails = {
     upi_id: string;
 };
 
-export const virtualAccountDetailsAtom = atomWithAsyncStorage<
-    TVirtualAccountDetails | null,
-    any
->('virtualAccountDetails', null);
+export const virtualAccountDetailsAtom = atomWithAsyncStorage(
+    'virtualAccountDetails',
+    null
+);
 
 export const updateBalanceAtom = atom(null, (get, set, balance: number) => {
     set(virtualAccountDetailsAtom, {

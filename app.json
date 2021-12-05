@@ -31,6 +31,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "jsEngine": "hermes",
+    "androidStatusBar": {
+      "show": true
     }
   }
 }

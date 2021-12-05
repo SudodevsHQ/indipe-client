@@ -33,6 +33,10 @@ GoogleSignin.configure({
 const AuthNavigator = () => {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useAtom(userAtom);
+    console.log(
+        '🚀 ~ file: AuthNavigator.tsx ~ line 36 ~ AuthNavigator ~ user',
+        user
+    );
 
     const [userTokenId, setUserIdToken] = useAtom(userIDTokenAtom);
 
@@ -40,15 +44,23 @@ const AuthNavigator = () => {
         isUserAccountCreatedAtom
     );
 
-    // console.log(
-    //     '\x1b[42m%s\x1b[0m',
-    //     'AuthNavigator.tsx line:53 userTokenId',
-    //     userTokenId
-    // );
+    const [isLoading, setisLoading] = useState(false);
+
+    console.log(
+        '\x1b[42m%s\x1b[0m',
+        'AuthNavigator.tsx line:53 userTokenId',
+        userTokenId
+    );
 
     useEffect(() => {
         function onAuthStateChanged(newUser) {
             setUser(newUser);
+
+            if (newUser) {
+                newUser.getIdToken().then(function (idToken) {
+                    setUserIdToken(idToken);
+                });
+            }
 
             if (initializing) {
                 setInitializing(false);
@@ -57,26 +69,27 @@ const AuthNavigator = () => {
 
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, [initializing, setUser, user]);
+    }, [initializing, setUser, setUserIdToken]);
 
     useEffect(() => {
         auth()
             .currentUser?.getIdToken()
             .then(t => setUserIdToken(t));
-    }, [setUserIdToken]);
+    }, [setUserIdToken, user]);
 
     useEffect(() => {
+        console.log(
+            '\x1b[32m%s\x1b[0m',
+            'AuthNavigator.tsx line:53 ---------->',
+            isUserAccountCreated,
+            userTokenId === '',
+            Boolean(user)
+        );
         // console.log(
         //     '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
         //     isUserAccountCreated
         // );
-        if (!isUserAccountCreated && userTokenId && user) {
-            // console.log(
-            //     '\x1b[32m%s\x1b[0m',
-            //     'AuthNavigator.tsx line:53 isUserCreated',
-            //     isUserAccountCreated
-            // );
-
+        if (userTokenId && user) {
             const payload = {
                 name: user.displayName,
                 id: user.uid,
@@ -92,7 +105,6 @@ const AuthNavigator = () => {
             //     'AuthNavigator.tsx line:77 payload',
             //     payload
             // );
-
             postRequest(
                 API_BASE_URL + '/create_user',
                 userTokenId,
@@ -120,7 +132,7 @@ const AuthNavigator = () => {
                     )
             );
         }
-    }, [userTokenId, user, isUserAccountCreated, setIsUserAccountCreated]);
+    }, [userTokenId, user, setIsUserAccountCreated, isUserAccountCreated]);
 
     if (initializing) {
         return null;

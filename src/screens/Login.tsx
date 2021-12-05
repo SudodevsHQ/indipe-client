@@ -22,9 +22,9 @@ const LoginScreen = () => {
 
         onGoogleButtonPress()
             .then(() => {
-                auth()
-                    .currentUser.getIdToken()
-                    .then(t => console.log(t));
+                // auth()
+                //     .currentUser.getIdToken()
+                //     .then(t => console.log(t));
 
                 console.log('Signed in with Google!');
             })
