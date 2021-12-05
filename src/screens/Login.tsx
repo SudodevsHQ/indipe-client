@@ -28,8 +28,7 @@ const LoginScreen = () => {
 
                 console.log('Signed in with Google!');
             })
-            .catch(e => console.log(e))
-            .then(() => setIsLoading(false));
+            .catch(e => console.log(e));
     };
 
     return (

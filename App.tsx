@@ -18,9 +18,9 @@ function App() {
 
     if (!fontsLoaded) {
         return <AppLoading />;
+    } else {
+        return <AuthNavigator />;
     }
-
-    return <AuthNavigator />;
 }
 
 export default App;

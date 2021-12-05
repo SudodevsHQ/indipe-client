@@ -46,7 +46,11 @@ function Home() {
     // useWebhookData();
 
     useEffect(() => {
-        if (isUserAccountCreated && userTokenId && !virtualAccountDetails) {
+        if (
+            isUserAccountCreated &&
+            userTokenId &&
+            !virtualAccountDetails?.upi_id
+        ) {
             const { uid, email, phoneNumber } = user;
 
             const payload = {
