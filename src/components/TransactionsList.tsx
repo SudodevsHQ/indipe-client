@@ -87,7 +87,7 @@ const TransactionsList = ({
 
             <FlatList
                 style={{ marginTop: 24 }}
-                data={transactions}
+                data={isSection ? transactions.slice(0, 5) : transactions}
                 renderItem={({ item, index }) => (
                     <Item transaction={item} key={index} />
                 )}

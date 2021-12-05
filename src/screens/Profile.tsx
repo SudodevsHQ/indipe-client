@@ -37,6 +37,7 @@ const Profile = () => {
                 title={'Account History'}
                 showTransactionsOnly
                 transactions={transactions}
+                isSection
             />
             <View
                 style={{
