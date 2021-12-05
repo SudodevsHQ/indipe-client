@@ -4,21 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { themes } from '../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
-
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-];
+import dayjs from 'dayjs';
 
 const Item = ({ transaction }) => (
     <View style={styles.item}>
@@ -37,7 +23,7 @@ const Item = ({ transaction }) => (
             )}
             {transaction.type === 'receive' ? (
                 <Text style={styles.dateTime}>
-                    {Date(transaction.created_at)}
+                    {dayjs(transaction.created_at).format('ddd D MMM HH:mm')}
                 </Text>
             ) : (
                 <Text style={styles.dateTime}>{transaction.upi}</Text>
@@ -55,8 +41,6 @@ type TTransactionListProps = {
 };
 
 const TransactionsList = ({
-    title,
-    showTransactionsOnly,
     isSection,
     transactions,
 }: TTransactionListProps) => {
@@ -87,7 +71,7 @@ const TransactionsList = ({
                 renderItem={({ item, index }) => (
                     <Item transaction={item} key={index} />
                 )}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.razorpay_tid}
             />
         </View>
     );

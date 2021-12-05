@@ -1,7 +1,6 @@
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
-import { API_BASE_URL } from '../constants/api';
 import { transactionsAtom, updateBalanceAtom, userAtom } from '../state/atoms';
 
 export default function useWebhookData() {

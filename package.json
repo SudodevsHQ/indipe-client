@@ -18,6 +18,7 @@
     "@react-native-google-signin/google-signin": "^7.0.1",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "dayjs": "^1.10.7",
     "expo": "~43.0.2",
     "expo-app-loading": "~1.2.1",
     "expo-clipboard": "~2.0.3",

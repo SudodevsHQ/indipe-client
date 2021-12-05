@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SectionList } from 'react-native';
 import MoneyInfo from '../components/MoneyInfo';
 import ProfileAvatar from '../components/ProfileAvatar';
 import TransactionsList from '../components/TransactionsList';
@@ -9,6 +9,10 @@ import { userAtom } from '../state/atoms';
 import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
 import { transactionsAtom } from '../state/atoms';
+import { GenericButton } from '../components/GenericButton';
+import { signOut } from '../utils/auth';
+import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
     const [user] = useAtom(userAtom);
@@ -34,6 +38,27 @@ const Profile = () => {
                 showTransactionsOnly
                 transactions={transactions}
             />
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <GenericButton
+                    type="outlined"
+                    text="Sign out"
+                    onPress={() => signOut()}
+                />
+                <GenericButton
+                    type="outlined"
+                    text=" 🚧 Clear AS "
+                    onPress={() =>
+                        AsyncStorage.clear(() =>
+                            console.log('ASYNC STORAGE CLEARED')
+                        )
+                    }
+                />
+            </View>
         </View>
     );
 };

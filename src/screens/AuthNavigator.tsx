@@ -14,13 +14,17 @@ import {
 } from '../state/atoms';
 import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
-import {
-    getDataFromAsyncStorage,
-    storeDataInAsyncStorage,
-} from '../utils/storage';
+
 import { ToastAndroid } from 'react-native';
-import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
-import useWebhookData from '../hooks/useWebhookData';
+import { NavigationContainer } from '@react-navigation/native';
+import AddMoney from './AddMoney';
+import Profile from './Profile';
+import Scanner from './Scanner';
+import SendMoney from './SendMoney';
+import Transactions from './Transactions';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
@@ -62,6 +66,10 @@ const AuthNavigator = () => {
     }, [setUserIdToken]);
 
     useEffect(() => {
+        console.log(
+            '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
+            isUserAccountCreated
+        );
         if (!isUserAccountCreated && userTokenId && user) {
             // console.log(
             //     '\x1b[32m%s\x1b[0m',
@@ -74,6 +82,10 @@ const AuthNavigator = () => {
                 id: user.uid,
                 currency: 'USD',
             };
+            console.log(
+                '🚀 ~ file: AuthNavigator.tsx ~ line 72 ~ useEffect ~ payload',
+                payload
+            );
 
             // console.log(
             //     '\x1b[32m%s\x1b[0m',
@@ -118,7 +130,42 @@ const AuthNavigator = () => {
         return <LoginScreen />;
     }
 
-    return <Home />;
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Add Money"
+                    component={AddMoney}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Scanner"
+                    component={Scanner}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Send Money"
+                    component={SendMoney}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Transactions"
+                    component={Transactions}
+                    options={{ headerShown: false }}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default AuthNavigator;

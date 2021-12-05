@@ -7,7 +7,6 @@ import MoneyInfo from '../components/MoneyInfo';
 import UpiInfo from '../components/UpiInfo';
 import GetStartedIllustration from '../components/GetStartedIllustration';
 import FooterButtons from '../components/FooterButtons';
-import { signOut } from '../utils/auth';
 
 import { useAtom } from 'jotai';
 import {
@@ -39,16 +38,16 @@ function Home() {
 
     const [isUserAccountCreated] = useAtom(isUserAccountCreatedAtom);
     const [transactions] = useAtom(transactionsAtom);
-    // console.log(
-    //     '\x1b[44m%s\x1b[0m',
-    //     'Home.tsx line:25 V A D',
-    //     virtualAccountDetails
-    // );
+    console.log(
+        '\x1b[44m%s\x1b[0m',
+        'Home.tsx line:25 V A D',
+        virtualAccountDetails
+    );
 
     useWebhookData();
 
     useEffect(() => {
-        if (isUserAccountCreated && userTokenId) {
+        if (isUserAccountCreated && userTokenId && !virtualAccountDetails) {
             const { uid, email, phoneNumber } = user;
 
             const payload = {
@@ -96,7 +95,12 @@ function Home() {
                 )
                 .then(() => setIsFetching(false));
         }
-    }, [userTokenId, setVirtualAccountDetails, isUserAccountCreated]);
+    }, [
+        userTokenId,
+        virtualAccountDetails,
+        setVirtualAccountDetails,
+        isUserAccountCreated,
+    ]);
 
     if (isFetching) return <FullScreenLoader />;
 
@@ -118,19 +122,6 @@ function Home() {
             )}
 
             <FooterButtons />
-
-            {/* <Button title="LOGOUT" onPress={() => signOut()}>
-                LOGIN
-            </Button> */}
-
-            {/* <Button
-                title="clear async storage"
-                onPress={() =>
-                    AsyncStorage.clear(() =>
-                        console.log('ASYNC STORAGE CLEARED')
-                    )
-                }
-            ></Button> */}
         </View>
     );
 }
