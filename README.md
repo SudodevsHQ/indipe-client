@@ -1,5 +1,5 @@
 # INDI>PE
-Frontend(React-native App) for IndiPe ( FTX 2021 Submission )
+Frontend (React-native App) for IndiPe ( FTX 2021 Submission )
 
 Project name : **INDI>PE** - An application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality who wish to transact in India.
 
@@ -7,12 +7,12 @@ Project name : **INDI>PE** - An application that can provide Indian UPI (Unified
 
 **Team Members :**
 
-- Aayush Dongre (dankre#7878) 
-- Anurag Patil (source#5843)
-- Ayush Singh (epinephrine69#4257)
-- Kunal Sharma (kunal#4839)
+>- Aayush Dongre (dankre#7878) 
+>- Anurag Patil (source#5843)
+>- Ayush Singh (epinephrine69#4257)
+>- Kunal Sharma (kunal#4839)
 
-NOTE : Check Backend [repository](https://github.com/SudodevsHQ/betsushi) for Working details and System Architecture. 
+_NOTE : Check Backend [repository](https://github.com/SudodevsHQ/betsushi) for Working details and System Architecture._ 
 
 Technologies used:
 - React Native
@@ -21,9 +21,9 @@ Technologies used:
 - Firebase Auth
 - Razorpay React Native SDK
 
-Backend [repository](https://github.com/SudodevsHQ/betsushi) for the Project. 
+**Backend [repository](https://github.com/SudodevsHQ/betsushi) for the Project.** 
 
-Frontend [repository](https://github.com/SudodevsHQ/indipe-client) for the Project. 
+**Frontend [repository](https://github.com/SudodevsHQ/indipe-client) for the Project.** 
 
 ### Screenshots
 
