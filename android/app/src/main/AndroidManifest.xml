@@ -29,7 +29,6 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.indipe"/>
         <data android:scheme="exp+indipay-client"/>
-        <data android:scheme="exp+indipay-client"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>

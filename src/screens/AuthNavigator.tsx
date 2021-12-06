@@ -24,6 +24,7 @@ import SendMoney from './SendMoney';
 import Transactions from './Transactions';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FullScreenLoader from '../components/FullScreenLoader';
+import RecieveMoney from './RecieveMoney';
 
 const Stack = createNativeStackNavigator();
 
@@ -174,6 +175,11 @@ const AuthNavigator = () => {
                 <Stack.Screen
                     name="Transactions"
                     component={Transactions}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Recieve Money"
+                    component={RecieveMoney}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

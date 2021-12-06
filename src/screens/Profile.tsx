@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SectionList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import MoneyInfo from '../components/MoneyInfo';
 import ProfileAvatar from '../components/ProfileAvatar';
 import TransactionsList from '../components/TransactionsList';
@@ -11,7 +11,6 @@ import { semiHugeText } from './AddMoney';
 import { transactionsAtom } from '../state/atoms';
 import { GenericButton } from '../components/GenericButton';
 import { signOut } from '../utils/auth';
-import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
@@ -49,15 +48,11 @@ const Profile = () => {
                 <GenericButton
                     type="outlined"
                     text="Sign out"
-                    onPress={() => signOut()}
-                />
-                <GenericButton
-                    type="outlined"
-                    text=" 🚧 Clear AS "
                     onPress={() =>
-                        AsyncStorage.clear(() =>
-                            console.log('ASYNC STORAGE CLEARED')
-                        )
+                        AsyncStorage.clear(() => {
+                            console.log('ASYNC STORAGE CLEARED');
+                            signOut();
+                        })
                     }
                 />
             </View>

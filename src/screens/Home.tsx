@@ -16,7 +16,7 @@ import {
 } from '../state/atoms';
 import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
-import FullScreenLoader from '../components/FullScreenLoader';
+// import FullScreenLoader from '../components/FullScreenLoader';
 import { pageStyles } from '../styles/common';
 import useWebSocketData from '../hooks/useWebSocketData';
 import { transactionsAtom } from '../state/atoms';
@@ -88,9 +88,9 @@ function Home() {
 
                     if (!virtualAccountDetails) {
                         ToastAndroid.showWithGravity(
-                            'Created Virtual account',
+                            'Fetched Virtual account',
                             ToastAndroid.SHORT,
-                            ToastAndroid.CENTER
+                            ToastAndroid.BOTTOM
                         );
                     }
                 },
