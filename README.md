@@ -1,9 +1,8 @@
 # INDI>PE
-Frontend (React-native App) for IndiPe ( FTX 2021 Submission )
+Frontend (React-native App) for IndiPe ( FTX 2021 **WINNER! 🚀** Submission )
 
-Project name : **INDI>PE** - An application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality who wish to transact in India.
+An application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality who wish to transact in India.🚀
 
-**Team name : Bruh**
 
 **Team Members :**
 
@@ -14,7 +13,7 @@ Project name : **INDI>PE** - An application that can provide Indian UPI (Unified
 
 _NOTE : Check Backend [repository](https://github.com/SudodevsHQ/betsushi) for Working details and System Architecture._ 
 
-Technologies used:
+⚛️ Technologies used:
 - React Native
 - Expo
 - Jotai (State Management)
@@ -24,8 +23,10 @@ Technologies used:
 **Backend [repository](https://github.com/SudodevsHQ/betsushi) for the Project.** 
 
 **Frontend [repository](https://github.com/SudodevsHQ/indipe-client) for the Project.** 
+<hr>
 
 ### Screenshots
+
 
 ![Group 39 (1)](https://user-images.githubusercontent.com/34394058/144720283-be52093b-314d-4129-9aa1-efa8b569bcda.png)
 ![Group 40](https://user-images.githubusercontent.com/34394058/144720286-3d7fd75a-0457-4544-b2d8-769d9cd1a8cc.png)
