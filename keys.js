@@ -1,1 +1,1 @@
-export const RAZORPAY_API_KEY = "rzp_test_CqopUr55ZgFmQ9";
+export const RAZORPAY_API_KEY = "well damn";
