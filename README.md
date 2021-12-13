@@ -22,7 +22,7 @@ _NOTE : Check Backend [repository](https://github.com/SudodevsHQ/betsushi) for W
 
 **Backend [repository](https://github.com/SudodevsHQ/betsushi) for the Project.** 
 
-**Frontend [repository](https://github.com/SudodevsHQ/indipe-client) for the Project.** 
+
 <hr>
 
 ### Screenshots
