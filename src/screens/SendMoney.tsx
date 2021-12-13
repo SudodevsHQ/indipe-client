@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { themes } from '../constants/colors';
 import { hugeText } from '../components/MoneyInfo';
-import { TextInput } from 'react-native-gesture-handler';
 import { GenericButton } from '../components/GenericButton';
 import CloseX from '../components/CloseX';
 import { useNavigation, useRoute } from '@react-navigation/core';
@@ -13,6 +12,7 @@ import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
 import { useAtom } from 'jotai';
 import { userAtom, userIDTokenAtom } from '../state/atoms';
+import AmountInput from '../components/AmountInput';
 
 const SendMoney = () => {
     const [amount, onAmountChange] = React.useState('');
@@ -44,18 +44,11 @@ const SendMoney = () => {
                 <CloseX />
             </View>
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                <View style={styles.inputContainer}>
-                    <Text style={hugeText}>₹</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={handleMoneyValueChange}
-                        value={amount}
-                        placeholder="0"
-                        keyboardType="decimal-pad"
-                        autoFocus
-                        textAlign="center"
-                    />
-                </View>
+                <AmountInput
+                    amount={amount}
+                    handleAmountChange={handleMoneyValueChange}
+                    currencySymbol={'₹'}
+                />
 
                 {receiverName && (
                     <View style={styles.reciever}>
@@ -79,8 +72,13 @@ const SendMoney = () => {
                     setPaymentProcessing(true);
                     postRequest(API_BASE_URL + '/payout', userIDToken, payload)
                         .then(
-                            () => {
+                            data => {
                                 Alert.alert('', 'Payment Success');
+                                console.log(
+                                    '%cSendMoney.tsx line:86 data',
+                                    'color: #007acc;',
+                                    data
+                                );
                                 setPaymentProcessing(false);
                                 navigation.navigate('Home');
                             },

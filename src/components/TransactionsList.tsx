@@ -4,46 +4,59 @@ import { Ionicons } from '@expo/vector-icons';
 import { themes } from '../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import dayjs from 'dayjs';
 
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-];
+const getIcon = transaction => {
+    if (transaction.type === 'send') {
+        if (transaction.status === 'processed') {
+            return 'checkmark-circle-outline';
+        }
+        return 'timer-outline';
+    } else {
+        return 'arrow-down';
+    }
+};
 
 const Item = ({ transaction }) => (
     <View style={styles.item}>
         <View style={styles.transferIcon}>
             <Ionicons
-                name="swap-horizontal"
-                size={20}
+                name={getIcon(transaction)}
+                size={24}
                 color={themes.light.subText}
             />
         </View>
+
         <View style={{ flex: 1 }}>
             {transaction.type === 'receive' ? (
                 <Text style={styles.transactionType}>Received On</Text>
             ) : (
                 <Text style={styles.transactionType}>Sent To</Text>
             )}
+
             {transaction.type === 'receive' ? (
                 <Text style={styles.dateTime}>
-                    {Date(transaction.created_at)}
+                    {dayjs(transaction.created_at).format('ddd D MMM HH:mm')}
                 </Text>
             ) : (
                 <Text style={styles.dateTime}>{transaction.upi}</Text>
             )}
         </View>
-        <Text style={styles.title}> {transaction.amount} INR</Text>
+
+        <Text
+            style={[
+                styles.title,
+                {
+                    color:
+                        transaction.status === 'authorized'
+                            ? themes.light.buttonBackground[1]
+                            : themes.light.subText,
+                },
+            ]}
+        >
+            {' '}
+            {transaction.amount} INR
+        </Text>
     </View>
 );
 
@@ -55,8 +68,6 @@ type TTransactionListProps = {
 };
 
 const TransactionsList = ({
-    title,
-    showTransactionsOnly,
     isSection,
     transactions,
 }: TTransactionListProps) => {
@@ -81,14 +92,28 @@ const TransactionsList = ({
                 </View>
             ) : null}
 
-            <FlatList
-                style={{ marginTop: 24 }}
-                data={transactions}
-                renderItem={({ item, index }) => (
-                    <Item transaction={item} key={index} />
-                )}
-                keyExtractor={item => item.id}
-            />
+            {isSection ? (
+                <View style={{ marginTop: 24 }}>
+                    {transactions.slice(0, 5).map(t => (
+                        <Item transaction={t} key={t.razorpay_tid} />
+                    ))}
+                </View>
+            ) : (
+                <FlatList
+                    showsVerticalScrollIndicator={false}
+                    style={{
+                        marginTop: 12,
+                        paddingTop: 12,
+                        marginBottom: 50,
+                        paddingBottom: 50,
+                    }}
+                    data={isSection ? transactions.slice(0, 5) : transactions}
+                    renderItem={({ item, index }) => (
+                        <Item transaction={item} key={index} />
+                    )}
+                    keyExtractor={item => item.razorpay_tid}
+                />
+            )}
         </View>
     );
 };
@@ -126,7 +151,7 @@ const styles = StyleSheet.create({
     transferIcon: {
         borderWidth: 1,
         borderRadius: 10,
-        padding: 10,
+        padding: 8,
         marginRight: 12,
     },
 });

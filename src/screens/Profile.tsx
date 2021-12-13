@@ -9,6 +9,9 @@ import { userAtom } from '../state/atoms';
 import { pageStyles } from '../styles/common';
 import { semiHugeText } from './AddMoney';
 import { transactionsAtom } from '../state/atoms';
+import { GenericButton } from '../components/GenericButton';
+import { signOut } from '../utils/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
     const [user] = useAtom(userAtom);
@@ -17,7 +20,7 @@ const Profile = () => {
     const [transactions] = useAtom(transactionsAtom);
 
     return (
-        <View style={styles.pageStyles}>
+        <ScrollView style={styles.pageStyles}>
             <View style={styles.header}>
                 <Text style={semiHugeText}>Hi, {displayName}</Text>
                 <ProfileAvatar />
@@ -33,13 +36,33 @@ const Profile = () => {
                 title={'Account History'}
                 showTransactionsOnly
                 transactions={transactions}
+                isSection
             />
-        </View>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginBottom: 40,
+                }}
+            >
+                <GenericButton
+                    type="outlined"
+                    text="Sign out"
+                    onPress={() =>
+                        AsyncStorage.clear(() => {
+                            console.log('ASYNC STORAGE CLEARED');
+                            signOut();
+                        })
+                    }
+                />
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     pageStyles: pageStyles,
+
     header: {
         flexDirection: 'row',
         alignItems: 'center',

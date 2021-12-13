@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "535712924105-l6rq51fn9l1ifh6vm6gmg1gcitvuhsas.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.indipe",
+            "certificate_hash": "6e2c0c9e95ffb75627d9e0383de4ab17c6e01fe3"
+          }
+        },
+        {
           "client_id": "535712924105-hbqscqkjpp6ve6st9urjhuqcae0vfvhc.apps.googleusercontent.com",
           "client_type": 3
         }

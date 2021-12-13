@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai';
+import { atom } from 'jotai';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
 
@@ -91,7 +91,7 @@ export type TVirtualAccountDetails = {
 };
 
 export const virtualAccountDetailsAtom = atomWithAsyncStorage<
-    TVirtualAccountDetails | null,
+    TVirtualAccountDetails,
     any
 >('virtualAccountDetails', null);
 
@@ -103,3 +103,5 @@ export const updateBalanceAtom = atom(null, (get, set, balance: number) => {
 });
 
 export const transactionsAtom = atom([]);
+
+export const upiQrImageUrl = atomWithAsyncStorage('upiQrImageUrl', null);

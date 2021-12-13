@@ -14,13 +14,19 @@ import {
 } from '../state/atoms';
 import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
-import {
-    getDataFromAsyncStorage,
-    storeDataInAsyncStorage,
-} from '../utils/storage';
+
 import { ToastAndroid } from 'react-native';
-import { ASYNC_STORAGE_KEYS } from '../constants/asyncStorage';
-import useWebhookData from '../hooks/useWebhookData';
+import { NavigationContainer } from '@react-navigation/native';
+import AddMoney from './AddMoney';
+import Profile from './Profile';
+import Scanner from './Scanner';
+import SendMoney from './SendMoney';
+import Transactions from './Transactions';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FullScreenLoader from '../components/FullScreenLoader';
+import RecieveMoney from './RecieveMoney';
+
+const Stack = createNativeStackNavigator();
 
 GoogleSignin.configure({
     webClientId: GOOGLE_SIGN_IN_WEBCLIENTID,
@@ -29,12 +35,18 @@ GoogleSignin.configure({
 const AuthNavigator = () => {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useAtom(userAtom);
+    console.log(
+        '🚀 ~ file: AuthNavigator.tsx ~ line 36 ~ AuthNavigator ~ user',
+        user
+    );
 
     const [userTokenId, setUserIdToken] = useAtom(userIDTokenAtom);
 
     const [isUserAccountCreated, setIsUserAccountCreated] = useAtom(
         isUserAccountCreatedAtom
     );
+
+    const [isLoading, setisLoading] = useState(false);
 
     console.log(
         '\x1b[42m%s\x1b[0m',
@@ -46,6 +58,12 @@ const AuthNavigator = () => {
         function onAuthStateChanged(newUser) {
             setUser(newUser);
 
+            if (newUser) {
+                newUser.getIdToken().then(function (idToken) {
+                    setUserIdToken(idToken);
+                });
+            }
+
             if (initializing) {
                 setInitializing(false);
             }
@@ -53,34 +71,42 @@ const AuthNavigator = () => {
 
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, [initializing, setUser, user]);
+    }, [initializing, setUser, setUserIdToken]);
 
     useEffect(() => {
         auth()
             .currentUser?.getIdToken()
             .then(t => setUserIdToken(t));
-    }, [setUserIdToken]);
+    }, [setUserIdToken, user]);
 
     useEffect(() => {
+        console.log(
+            '\x1b[32m%s\x1b[0m',
+            'AuthNavigator.tsx line:53 ---------->',
+            isUserAccountCreated,
+            userTokenId === '',
+            Boolean(user)
+        );
+        // console.log(
+        //     '🚀 ~ file: AuthNavigator.tsx ~ line 62 ~ useEffect ~ isUserAccountCreated',
+        //     isUserAccountCreated
+        // );
         if (!isUserAccountCreated && userTokenId && user) {
-            // console.log(
-            //     '\x1b[32m%s\x1b[0m',
-            //     'AuthNavigator.tsx line:53 isUserCreated',
-            //     isUserAccountCreated
-            // );
-
             const payload = {
                 name: user.displayName,
                 id: user.uid,
                 currency: 'USD',
             };
+            console.log(
+                '🚀 ~ file: AuthNavigator.tsx ~ line 72 ~ useEffect ~ payload',
+                payload
+            );
 
             // console.log(
             //     '\x1b[32m%s\x1b[0m',
             //     'AuthNavigator.tsx line:77 payload',
             //     payload
             // );
-
             postRequest(
                 API_BASE_URL + '/create_user',
                 userTokenId,
@@ -92,11 +118,11 @@ const AuthNavigator = () => {
                         'color: white; background-color: #26bfa5;'
                     );
 
-                    ToastAndroid.showWithGravity(
-                        'Created User account',
-                        ToastAndroid.SHORT,
-                        ToastAndroid.CENTER
-                    );
+                    // ToastAndroid.showWithGravity(
+                    //     'Created User account',
+                    //     ToastAndroid.SHORT,
+                    //     ToastAndroid.CENTER
+                    // );
 
                     setIsUserAccountCreated(true);
                 },
@@ -108,7 +134,7 @@ const AuthNavigator = () => {
                     )
             );
         }
-    }, [userTokenId, user, isUserAccountCreated, setIsUserAccountCreated]);
+    }, [userTokenId, user, setIsUserAccountCreated, isUserAccountCreated]);
 
     if (initializing) {
         return null;
@@ -118,7 +144,47 @@ const AuthNavigator = () => {
         return <LoginScreen />;
     }
 
-    return <Home />;
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Add Money"
+                    component={AddMoney}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Scanner"
+                    component={Scanner}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Send Money"
+                    component={SendMoney}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Transactions"
+                    component={Transactions}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Recieve Money"
+                    component={RecieveMoney}
+                    options={{ headerShown: false }}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default AuthNavigator;

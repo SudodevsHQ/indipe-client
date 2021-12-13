@@ -72,7 +72,12 @@ buck-out/
 web-build/
 dist/
 
-keys.js
+# keys.js
 .eslintcache
 .vscode
 # @end expo-cli
+
+
+credentials.json
+
+build-0*

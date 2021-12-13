@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { StyleSheet, Text, Linking, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -16,7 +16,7 @@ const Scanner = () => {
 
         navigation.navigate('Send Money', {
             upiAddress: upiAddress,
-            receiverName: name,
+            receiverName: decodeURI(name),
         });
     };
 

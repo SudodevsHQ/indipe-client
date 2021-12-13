@@ -29,10 +29,10 @@ const FooterButtons = () => {
             <GenericButton
                 text="Recieve Money"
                 type="secondary"
-                onPress={() => setModalVisible(true)}
+                onPress={() => navigation.navigate('Recieve Money')}
             />
 
-            <InfoModal
+            {/* <InfoModal
                 buttonText={'Add Money'}
                 onButtonPress={() => navigation.navigate('Add Money')}
                 modalVisible={modalVisible}
@@ -40,7 +40,7 @@ const FooterButtons = () => {
                 modalText={
                     'To Send or Recieve money, add money to your account'
                 }
-            />
+            /> */}
         </View>
     );
 };

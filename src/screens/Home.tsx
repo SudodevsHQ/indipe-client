@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, ToastAndroid } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, StyleSheet, ToastAndroid } from 'react-native';
 
 import ProfileAvatar from '../components/ProfileAvatar';
 import MoneyInfo from '../components/MoneyInfo';
 import UpiInfo from '../components/UpiInfo';
 import GetStartedIllustration from '../components/GetStartedIllustration';
 import FooterButtons from '../components/FooterButtons';
-import { signOut } from '../utils/auth';
 
 import { useAtom } from 'jotai';
 import {
@@ -18,9 +16,9 @@ import {
 } from '../state/atoms';
 import { postRequest } from '../utils/requests';
 import { API_BASE_URL } from '../constants/api';
-import FullScreenLoader from '../components/FullScreenLoader';
+// import FullScreenLoader from '../components/FullScreenLoader';
 import { pageStyles } from '../styles/common';
-import useWebhookData from '../hooks/useWebhookData';
+import useWebSocketData from '../hooks/useWebSocketData';
 import { transactionsAtom } from '../state/atoms';
 import TransactionsList from '../components/TransactionsList';
 
@@ -33,22 +31,33 @@ function Home() {
         virtualAccountDetailsAtom
     );
 
-    const [isFetching, setIsFetching] = useState(false);
+    // const [isFetching, setIsFetching] = useState(false);
 
     const [userTokenId] = useAtom(userIDTokenAtom);
 
     const [isUserAccountCreated] = useAtom(isUserAccountCreatedAtom);
     const [transactions] = useAtom(transactionsAtom);
-    // console.log(
-    //     '\x1b[44m%s\x1b[0m',
-    //     'Home.tsx line:25 V A D',
-    //     virtualAccountDetails
-    // );
+    console.log(
+        '\x1b[44m%s\x1b[0m',
+        'Home.tsx line:25 V A D',
+        virtualAccountDetails
+    );
 
-    useWebhookData();
+    /**
+     * prevent jank from loading -> screen -> loading
+     */
+    // useEffect(() => {
+    //     if (isUserAccountCreated && !virtualAccountDetails) {
+    //         setIsFetching(true);
+    //     }
+    // }, [isUserAccountCreated, virtualAccountDetails]);
 
     useEffect(() => {
-        if (isUserAccountCreated && userTokenId) {
+        if (
+            isUserAccountCreated &&
+            userTokenId &&
+            !virtualAccountDetails?.upi_id
+        ) {
             const { uid, email, phoneNumber } = user;
 
             const payload = {
@@ -68,37 +77,45 @@ function Home() {
             //     payload
             // );
 
-            setIsFetching(true);
+            // setIsFetching(true);
             postRequest(
                 API_BASE_URL + '/create_virtual_account',
                 userTokenId,
                 payload
-            )
-                .then(
-                    data => {
-                        setVirtualAccountDetails(data);
+            ).then(
+                data => {
+                    setVirtualAccountDetails(data);
 
-                        if (!virtualAccountDetails) {
-                            ToastAndroid.showWithGravity(
-                                'Created Virtual account',
-                                ToastAndroid.SHORT,
-                                ToastAndroid.CENTER
-                            );
-                        }
-                    },
+                    if (!virtualAccountDetails) {
+                        ToastAndroid.showWithGravity(
+                            'Fetched Virtual account',
+                            ToastAndroid.SHORT,
+                            ToastAndroid.BOTTOM
+                        );
+                    }
+                },
 
-                    error =>
-                        console.log(
-                            '\x1b[41m%s\x1b[0m',
-                            'Home.tsx line:40 [ERROR]: Failed to /create_virtual_account; error',
-                            error
-                        )
-                )
-                .then(() => setIsFetching(false));
+                error =>
+                    console.log(
+                        '\x1b[41m%s\x1b[0m',
+                        'Home.tsx line:40 [ERROR]: Failed to /create_virtual_account; error',
+                        error
+                    )
+            );
+            // .then(() => setIsFetching(false));
         }
-    }, [userTokenId, setVirtualAccountDetails, isUserAccountCreated]);
+        // 🚧
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        userTokenId,
+        virtualAccountDetails,
+        setVirtualAccountDetails,
+        isUserAccountCreated,
+    ]);
 
-    if (isFetching) return <FullScreenLoader />;
+    useWebSocketData();
+
+    // if (isFetching) return <FullScreenLoader />;
 
     return (
         <View style={styles.pageStyles}>
@@ -118,19 +135,6 @@ function Home() {
             )}
 
             <FooterButtons />
-
-            {/* <Button title="LOGOUT" onPress={() => signOut()}>
-                LOGIN
-            </Button> */}
-
-            {/* <Button
-                title="clear async storage"
-                onPress={() =>
-                    AsyncStorage.clear(() =>
-                        console.log('ASYNC STORAGE CLEARED')
-                    )
-                }
-            ></Button> */}
         </View>
     );
 }
