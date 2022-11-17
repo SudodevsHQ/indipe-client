@@ -1,5 +1,5 @@
 # INDI>PE
-Frontend (React-native App) for IndiPe ( FTX 2021 **WINNER! 🚀** Submission )
+Frontend (React-native App) for IndiPe ( Razorpay FTX 2021 **WINNER! 🚀** Submission )
 
 An application that can provide Indian UPI (Unified Payments Interface) to the people of foreign nationality who wish to transact in India.🚀
 
